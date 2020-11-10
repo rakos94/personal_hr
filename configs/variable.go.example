@@ -1,0 +1,18 @@
+package configs
+
+// DB
+const (
+	host    = "localhost"
+	user    = "postgres"
+	pass    = "secret"
+	dbname  = "personal_hr"
+	port    = 5432
+	sslmode = "disable"
+)
+
+// JWT
+var (
+	UserIdExample        = "20022012"
+	SecretKeyExample     = "mLmHu8f1IxFo4dWurBG3jEf1Ex0wDZvvwND6eFmcaX"
+	SigningMethodExample = "HS512"
+)
