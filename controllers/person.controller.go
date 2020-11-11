@@ -1,10 +1,8 @@
 package controllers
 
 import (
-	"errors"
 	"fmt"
 	"net/http"
-	"personal_hr/configs"
 	"personal_hr/helper"
 	"personal_hr/models"
 	"personal_hr/requests"
@@ -21,7 +19,7 @@ var personService services.PersonService = services.PersonServiceImpl{}
 func SetPerson(c *echo.Group, e *echo.Echo) {
 	e.POST("/person", createPerson)
 	e.POST("/api/login", login)
-	c.GET("/person/:id", getPersonById)
+	c.GET("/person/:id", getPersonByID)
 	c.GET("/user", getUser)
 }
 
@@ -40,12 +38,12 @@ func createPerson(c echo.Context) error {
 	helper.ConvertRequest(req, data)
 
 	result, err := personService.CreatePerson(data)
-	if err == nil {
-		rs := responses.NewPersonResponse(result)
-		return res(c, rs)
+	if err != nil {
+		return resErr(c, err)
 	}
 
-	return resErr(c, err)
+	rs := responses.NewPersonResponse(result)
+	return res(c, rs)
 }
 
 func login(c echo.Context) error {
@@ -59,29 +57,25 @@ func login(c echo.Context) error {
 		return resValErr(c, err)
 	}
 
-	var result, err = personService.Login(data.Email, data.Password)
-	if err == nil {
-		v, _ := configs.CreateJwtToken(data.Email)
-		result.Token = v
-		return res(c, result)
+	result, err := personService.Login(data.Email, data.Password)
+	if err != nil {
+		return resErr(c, err)
 	}
 
-	return resErr(c, err)
+	rs := responses.NewLoginResponse(&result)
+	return res(c, rs)
 }
 
-func getPersonById(c echo.Context) error {
+func getPersonByID(c echo.Context) error {
 	id := c.Param("id")
 
-	var result, err = personService.GetPersonById(id)
-	if err == nil {
-		if result.Count != 0 {
-			return res(c, result)
-		}
-
-		return resErr(c, errors.New("Data not found"))
+	result, err := personService.GetPersonByID(id)
+	if err != nil {
+		return resErr(c, err)
 	}
 
-	return resErr(c, err)
+	rs := responses.NewPersonResponse(&result)
+	return res(c, rs)
 }
 
 func getUser(c echo.Context) error {

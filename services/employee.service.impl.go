@@ -8,15 +8,15 @@ import (
 	"strconv"
 )
 
-// EmployeeServiceImpl ...
-type EmployeeServiceImpl struct{}
-
 var employeeDao dao.EmployeeDao = dao.EmployeeDaoImpl{}
 var personService PersonService = PersonServiceImpl{}
 
+// EmployeeServiceImpl ...
+type EmployeeServiceImpl struct{}
+
 // CreateEmployee ...
 func (EmployeeServiceImpl) CreateEmployee(emp *models.Employee) (*models.Employee, error) {
-	_, err := personService.GetPersonById(emp.PersonID)
+	_, err := personService.GetPersonByID(emp.PersonID)
 	if err != nil {
 		return nil, err
 	}

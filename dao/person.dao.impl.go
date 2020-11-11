@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"errors"
 	"personal_hr/models"
 )
 
@@ -20,12 +21,15 @@ func (PersonDaoImpl) CreatePerson(person *models.Person) (*models.Person, error)
 func (PersonDaoImpl) GetPersonByID(id string) (models.Person, error) {
 	data := models.Person{}
 	result := g.Where("id", id).First(&data)
-
-	if result.Error == nil {
-		data.Count = result.RowsAffected
-		return data, nil
+	if result.RowsAffected == 0 {
+		return data, errors.New("Record not found")
 	}
-	return data, result.Error
+	if result.Error != nil {
+		return data, result.Error
+	}
+
+	data.Count = result.RowsAffected
+	return data, nil
 }
 
 // GetPersonByEmail ...

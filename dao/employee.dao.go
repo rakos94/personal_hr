@@ -8,5 +8,5 @@ type EmployeeDao interface {
 	GetEmployeeByID(id string) (models.Employee, error)
 	GetEmployeeAll() ([]models.Employee, error)
 	GetEmployeeCount() (int64, error)
-	GetEmployeeByPersonID(personId string) (models.Employee, error)
+	GetEmployeeByPersonID(personID string) (models.Employee, error)
 }
