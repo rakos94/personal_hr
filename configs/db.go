@@ -17,6 +17,9 @@ var tables = []interface{}{
 	&models.Location{},
 	&models.Position{},
 	&models.Assignement{},
+	&models.City{},
+	&models.Contry{},
+	&models.Provices{},
 }
 
 func Conn() (*gorm.DB, error) {
