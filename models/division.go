@@ -1,9 +1,9 @@
 package models
 
-// Divisi ...
-type Divisi struct {
+// Division ...
+type Division struct {
 	BaseModels
-	DivitionName string `gorm:"not null" json:"divition_name"`
+	DivisionName string `gorm:"not null" json:"division_name"`
 	DepartmentId string `gorm:"foreignKey:department_id;not null" json:"department_id"`
 	CreatedAt    string `json:"created_at"`
 	UpdatedAt    string `json:"updated_at"`
@@ -11,6 +11,6 @@ type Divisi struct {
 }
 
 // TableName ...
-func (Divisi) TableName() string {
-	return "tb_divitions"
+func (Division) TableName() string {
+	return "tb_divisions"
 }

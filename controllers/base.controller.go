@@ -2,11 +2,13 @@ package controllers
 
 import (
 	"net/http"
+	"personal_hr/helper"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo"
 )
 
+// SetInit ...
 func SetInit(e *echo.Echo) {
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Rest API started")
@@ -37,9 +39,9 @@ func resValErr(c echo.Context, err error) error {
 		var message string
 		switch v.Tag() {
 		case "required":
-			message = v.Field() + " is required"
+			message = helper.ToSnakeCase(v.Field()) + " is required"
 		case "email":
-			message = v.Field() + " must be an email"
+			message = helper.ToSnakeCase(v.Field()) + " must be an email"
 		}
 		errorMessages = append(errorMessages, message)
 	}

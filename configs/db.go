@@ -13,7 +13,7 @@ var tables = []interface{}{
 	&models.Employee{},
 	&models.Company{},
 	&models.Department{},
-	&models.Divisi{},
+	&models.Division{},
 	&models.Location{},
 	&models.Position{},
 	&models.Assignement{},

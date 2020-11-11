@@ -2,6 +2,7 @@ package services
 
 import (
 	"errors"
+	"log"
 	"personal_hr/dao"
 	"personal_hr/models"
 
@@ -10,6 +11,7 @@ import (
 
 var personDao dao.PersonDao = dao.PersonDaoImpl{}
 
+// PersonServiceImpl ...
 type PersonServiceImpl struct{}
 
 // CreatePerson ...
@@ -24,7 +26,7 @@ func (PersonServiceImpl) CreatePerson(person *models.Person) (*models.Person, er
 
 // GetPersonById ...
 func (PersonServiceImpl) GetPersonById(id string) (models.Person, error) {
-	return personDao.GetPersonById(id)
+	return personDao.GetPersonByID(id)
 }
 
 // Login ...
@@ -32,6 +34,9 @@ func (PersonServiceImpl) Login(email string, pwd string) (models.Person, error) 
 	result, err := personDao.GetPersonByEmail(email)
 	if err == nil && result.Count > 0 {
 		var err = bcrypt.CompareHashAndPassword([]byte(result.Password), []byte(pwd))
+		if err != nil {
+			log.Println(err.Error())
+		}
 		if err == nil {
 			return result, nil
 		}

@@ -5,8 +5,10 @@ import (
 	"fmt"
 	"net/http"
 	"personal_hr/configs"
+	"personal_hr/helper"
 	"personal_hr/models"
 	"personal_hr/requests"
+	"personal_hr/responses"
 	"personal_hr/services"
 
 	"github.com/dgrijalva/jwt-go"
@@ -15,6 +17,7 @@ import (
 
 var personService services.PersonService = services.PersonServiceImpl{}
 
+// SetPerson ...
 func SetPerson(c *echo.Group, e *echo.Echo) {
 	e.POST("/person", createPerson)
 	e.POST("/api/login", login)
@@ -23,19 +26,23 @@ func SetPerson(c *echo.Group, e *echo.Echo) {
 }
 
 func createPerson(c echo.Context) error {
-	data := &models.Person{}
+	req := &requests.PersonRequest{}
 
-	if err := c.Bind(data); err != nil {
+	if err := c.Bind(req); err != nil {
 		return c.String(http.StatusBadRequest, err.Error())
 	}
 
-	if err := c.Validate(data); err != nil {
+	if err := c.Validate(req); err != nil {
 		return resValErr(c, err)
 	}
 
+	data := &models.Person{}
+	helper.ConvertRequest(req, data)
+
 	result, err := personService.CreatePerson(data)
 	if err == nil {
-		return res(c, result)
+		rs := responses.NewPersonResponse(result)
+		return res(c, rs)
 	}
 
 	return resErr(c, err)

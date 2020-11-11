@@ -4,19 +4,22 @@ import (
 	"personal_hr/models"
 )
 
+// PersonDaoImpl ...
 type PersonDaoImpl struct{}
 
-func (PersonDaoImpl) CreatePerson(user *models.Person) (*models.Person, error) {
-	result := g.Create(user)
+// CreatePerson ...
+func (PersonDaoImpl) CreatePerson(person *models.Person) (*models.Person, error) {
+	result := g.Create(person)
 	if result.Error == nil {
-		return user, nil
+		return person, nil
 	}
 	return nil, result.Error
 }
 
-func (PersonDaoImpl) GetPersonById(id string) (models.Person, error) {
+// GetPersonByID ...
+func (PersonDaoImpl) GetPersonByID(id string) (models.Person, error) {
 	data := models.Person{}
-	result := g.First(&data).Where(id, id)
+	result := g.Where("id", id).First(&data)
 
 	if result.Error == nil {
 		data.Count = result.RowsAffected
@@ -25,6 +28,7 @@ func (PersonDaoImpl) GetPersonById(id string) (models.Person, error) {
 	return data, result.Error
 }
 
+// GetPersonByEmail ...
 func (PersonDaoImpl) GetPersonByEmail(email string) (models.Person, error) {
 	var data models.Person
 	result := g.Where("email = ?", email).Find(&data)
