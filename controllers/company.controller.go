@@ -17,7 +17,7 @@ var companyService services.CompanyService = services.CompanyServiceImpl{}
 func SetCompany(c *echo.Group) {
 	c.POST("/company", createCompany)
 	c.PUT("/company/:id", updateCompany)
-	c.GET("/person/:id", getCompanyByID)
+	c.GET("/company/:id", getCompanyByID)
 	c.GET("/company", getCompanyAll)
 }
 
