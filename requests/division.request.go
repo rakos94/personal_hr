@@ -2,6 +2,6 @@ package requests
 
 // DivisionRequest ...
 type DivisionRequest struct {
-	DivisionName string `json:"division_name" validate:"required"`
-	DepartmentId string `json:"department_id" validate:"required"`
+	DivisionName string `form:"division_name" validate:"required"`
+	DepartmentId string `form:"department_id" validate:"required"`
 }
