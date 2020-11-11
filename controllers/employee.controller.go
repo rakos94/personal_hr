@@ -5,6 +5,7 @@ import (
 	"personal_hr/helper"
 	"personal_hr/models"
 	"personal_hr/requests"
+	"personal_hr/responses"
 	"personal_hr/services"
 
 	"github.com/labstack/echo"
@@ -34,29 +35,36 @@ func createEmployee(c echo.Context) error {
 	helper.ConvertRequest(req, data)
 
 	result, err := employeeService.CreateEmployee(data)
-	if err == nil {
-		return res(c, result)
+	if err != nil {
+		return resErr(c, err)
 	}
 
-	return resErr(c, err)
+	rs := responses.NewEmployeeResponse(result)
+	return res(c, rs)
 }
 
 func getEmployeeByID(c echo.Context) error {
 	id := c.Param("id")
 
-	var result, err = employeeService.GetEmployeeByID(id)
-	if err == nil {
-		return res(c, result)
+	result, err := employeeService.GetEmployeeByID(id)
+	if err != nil {
+		return resErr(c, err)
 	}
 
-	return resErr(c, err)
+	rs := responses.NewEmployeeResponse(&result)
+	return res(c, rs)
 }
 
 func getEmployeeAll(c echo.Context) error {
-	var result, err = employeeService.GetEmployeeAll()
-	if err == nil {
-		return res(c, result)
+	result, err := employeeService.GetEmployeeAll()
+	if err != nil {
+		return resErr(c, err)
 	}
 
-	return resErr(c, err)
+	var resList []*responses.EmployeeResponse
+	for _, data := range result {
+		rs := responses.NewEmployeeResponse(&data)
+		resList = append(resList, rs)
+	}
+	return res(c, result)
 }
