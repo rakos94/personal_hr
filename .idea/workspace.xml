@@ -20,21 +20,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6a0a61ce-8b85-4302-ac03-6f2f76ee68ad" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/personal_hr.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/city.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/contry.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/provices.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dao/city.dao.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dao/city.dao.impl.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dao/country.dao.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dao/country.dao.impl.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dao/location.dao.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dao/location.dao.impl.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dao/provinceDao.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dao/provinceDaoImpl.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/country.service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/configs/db.go" beforeDir="false" afterPath="$PROJECT_DIR$/configs/db.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/variable.go.example" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/assignment.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/assignment.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/location.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/location.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/position.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/position.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/city.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/city.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/contry.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/country.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/provices.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/provinces.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,21 +113,21 @@
     <integration-enabled>true</integration-enabled>
   </component>
   <component name="WindowStateProjectService">
-    <state width="1323" height="184" key="GridCell.Tab.0.bottom" timestamp="1605067868494">
+    <state width="1323" height="184" key="GridCell.Tab.0.bottom" timestamp="1605068585773">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1323" height="184" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1605067868494" />
-    <state width="1323" height="184" key="GridCell.Tab.0.center" timestamp="1605067868494">
+    <state width="1323" height="184" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1605068585773" />
+    <state width="1323" height="184" key="GridCell.Tab.0.center" timestamp="1605068585773">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1323" height="184" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1605067868494" />
-    <state width="1323" height="184" key="GridCell.Tab.0.left" timestamp="1605067868493">
+    <state width="1323" height="184" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1605068585773" />
+    <state width="1323" height="184" key="GridCell.Tab.0.left" timestamp="1605068585772">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1323" height="184" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1605067868493" />
-    <state width="1323" height="184" key="GridCell.Tab.0.right" timestamp="1605067868494">
+    <state width="1323" height="184" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1605068585772" />
+    <state width="1323" height="184" key="GridCell.Tab.0.right" timestamp="1605068585773">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1323" height="184" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1605067868494" />
+    <state width="1323" height="184" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1605068585773" />
   </component>
 </project>

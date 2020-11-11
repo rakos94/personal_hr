@@ -9,8 +9,8 @@ type City struct {
 	BaseModels
 	Name string `gorm:"column:name" json:"name"`
 	Code string	`gorm:"column:code;unique" json:"code"`
-	ProviceId string `gorm:"column:provice_id" json:"provice_id"`
-	Provices Provices `gorm:"foreignKey:provice_id" json:"provices"`
+	ProvinceId string `gorm:"column:province_id" json:"province_id"`
+	Provinces Provinces `gorm:"foreignKey:province_id" json:"provinces"`
 }
 func (City) TableName() string {
 	return "tb_city"
