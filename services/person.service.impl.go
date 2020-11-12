@@ -40,11 +40,12 @@ func (PersonServiceImpl) Login(email string, pwd string) (models.Person, error) 
 // CreatePerson ...
 func (PersonServiceImpl) CreatePerson(person *models.Person) (*models.Person, error) {
 	result, err := bcrypt.GenerateFromPassword([]byte(person.Password), 4)
-	if err == nil {
-		person.Password = string(result)
-		return personDao.CreatePerson(person)
+	if err != nil {
+		return nil, err
 	}
-	return nil, err
+
+	person.Password = string(result)
+	return personDao.CreatePerson(person)
 }
 
 // GetPersonAll ...

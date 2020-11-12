@@ -10,13 +10,7 @@ import (
 
 var tables = []interface{}{
 	&models.Person{},
-	&models.Employee{},
-	&models.Company{},
-	&models.Department{},
-	&models.Division{},
 	&models.Location{},
-	&models.Position{},
-	&models.Assignement{},
 	&models.City{},
 	&models.Country{},
 	&models.Provinces{},

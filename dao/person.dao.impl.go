@@ -1,7 +1,6 @@
 package dao
 
 import (
-	"errors"
 	"personal_hr/models"
 )
 
@@ -32,14 +31,10 @@ func (PersonDaoImpl) GetPersonAll() ([]models.Person, error) {
 func (PersonDaoImpl) GetPersonByID(id string) (models.Person, error) {
 	data := models.Person{}
 	result := g.Where("id", id).First(&data)
-	if result.RowsAffected == 0 {
-		return data, errors.New("Record not found")
-	}
 	if result.Error != nil {
 		return data, result.Error
 	}
 
-	data.Count = result.RowsAffected
 	return data, nil
 }
 
@@ -47,12 +42,11 @@ func (PersonDaoImpl) GetPersonByID(id string) (models.Person, error) {
 func (PersonDaoImpl) GetPersonByEmail(email string) (models.Person, error) {
 	var data models.Person
 	result := g.Where("email = ?", email).Find(&data)
-
-	if result.Error == nil {
-		data.Count = result.RowsAffected
-		return data, nil
+	if result.Error != nil {
+		return data, result.Error
 	}
-	return data, result.Error
+
+	return data, nil
 }
 
 // UpdatePerson ...

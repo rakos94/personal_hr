@@ -28,9 +28,6 @@ func main() {
 
 	controllers.SetInit(e)
 	controllers.SetPerson(jwtGroup, e)
-	controllers.SetEmployee(jwtGroup)
-	controllers.SetCompany(jwtGroup)
-	controllers.SetDepartment(jwtGroup)
 	controllers.SetCountry(jwtGroup)
 
 	//start server
