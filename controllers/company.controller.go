@@ -86,11 +86,6 @@ func getCompanyAll(c echo.Context) error {
 		return resErr(c, err)
 	}
 
-	var resList []*responses.CompanyResponse
-	for _, data := range result {
-		rs := responses.NewCompanyResponse(&data)
-		resList = append(resList, rs)
-	}
-
+	resList := responses.NewListCompanyResponse(result)
 	return res(c, resList)
 }

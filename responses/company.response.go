@@ -7,7 +7,7 @@ import (
 
 // CompanyResponse ...
 type CompanyResponse struct {
-	Departments []*DepartmentResponse `json:"-"`
+	Departments []DepartmentResponse `json:"-"`
 	models.BaseModels
 	CompanyName string `json:"company_name"`
 	models.BaseCUModels
@@ -15,16 +15,21 @@ type CompanyResponse struct {
 
 // NewCompanyResponse ...
 func NewCompanyResponse(m *models.Company) *CompanyResponse {
-	var departments []*DepartmentResponse
-	for _, d := range m.Department {
-		departments = append(departments, NewDepartmentResponse(&d))
-	}
 	return &CompanyResponse{
-		Departments:  departments,
+		Departments:  NewListDepartmentResponse(m.Department),
 		BaseModels:   m.BaseModels,
 		CompanyName:  m.CompanyName,
 		BaseCUModels: m.BaseCUModels,
 	}
+}
+
+// NewListCompanyResponse ...
+func NewListCompanyResponse(list []models.Company) []CompanyResponse {
+	var companies []CompanyResponse
+	for _, d := range list {
+		companies = append(companies, *NewCompanyResponse(&d))
+	}
+	return companies
 }
 
 // LoadRelation ...
