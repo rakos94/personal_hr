@@ -30,6 +30,7 @@ func main() {
 	controllers.SetPerson(jwtGroup, e)
 	controllers.SetEmployee(jwtGroup)
 	controllers.SetCompany(jwtGroup)
+	controllers.SetCountry(jwtGroup)
 
 	//start server
 	e.Logger.Fatal(e.Start(":1234"))
