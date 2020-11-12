@@ -5,7 +5,7 @@ type Department struct {
 	BaseModels
 	DepartmentName string  `gorm:"not null"`
 	CompanyID      string  `gorm:"not null"`
-	Company        Company `gorm:"foreignKey:CompanyId"`
+	Company        Company `gorm:"foreignKey:CompanyID"`
 	BaseCUModels
 }
 
