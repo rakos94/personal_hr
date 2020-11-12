@@ -19,3 +19,12 @@ func NewDepartmentResponse(m *models.Department) *DepartmentResponse {
 		BaseCUModels:   m.BaseCUModels,
 	}
 }
+
+// NewListDepartmentResponse ...
+func NewListDepartmentResponse(list []models.Department) []DepartmentResponse {
+	var departments []DepartmentResponse
+	for _, d := range list {
+		departments = append(departments, *NewDepartmentResponse(&d))
+	}
+	return departments
+}
