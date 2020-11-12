@@ -30,7 +30,7 @@ func CreateJwtToken(email string) (string, error) {
 		email,
 		jwtGo.StandardClaims{
 			Id:        email,
-			ExpiresAt: time.Now().Add(1 * time.Hour).Unix(),
+			ExpiresAt: time.Now().Add(time.Duration(JwtExpiredHour) * time.Hour).Unix(),
 		},
 	}
 

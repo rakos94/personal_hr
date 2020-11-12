@@ -20,7 +20,7 @@ func (CompanyDaoImpl) CreateCompany(data *models.Company) (*models.Company, erro
 // GetCompanyByID ...
 func (CompanyDaoImpl) GetCompanyByID(id string) (models.Company, error) {
 	m := models.Company{}
-	result := g.Where("id", id).First(&m)
+	result := g.Preload("Department").Where("id", id).First(&m)
 	if result.Error != nil {
 		return m, result.Error
 	}
@@ -42,11 +42,7 @@ func (CompanyDaoImpl) GetCompanyAll() ([]models.Company, error) {
 // UpdateCompany ...
 func (CompanyDaoImpl) UpdateCompany(id string, data *models.Company) (*models.Company, error) {
 	m := &models.Company{}
-	first := g.Where("id", id).First(m)
-	if first.Error != nil {
-		return m, first.Error
-	}
-	update := g.Model(m).Updates(data)
+	update := g.Where("id", id).First(m).Updates(data)
 	if update.Error != nil {
 		return m, update.Error
 	}

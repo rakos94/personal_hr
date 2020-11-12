@@ -3,7 +3,8 @@ package models
 // Company ...
 type Company struct {
 	BaseModels
-	CompanyName string `gorm:"not null" `
+	CompanyName string       `gorm:"not null"`
+	Department  []Department `gorm:"foreignKey:CompanyID"`
 	BaseCUModels
 }
 

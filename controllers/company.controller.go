@@ -76,7 +76,7 @@ func getCompanyByID(c echo.Context) error {
 		return resErr(c, err)
 	}
 
-	rs := responses.NewCompanyResponse(&result)
+	rs := responses.NewCompanyResponse(&result).LoadRelation()
 	return res(c, rs)
 }
 
