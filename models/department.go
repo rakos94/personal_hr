@@ -3,11 +3,10 @@ package models
 // Department ...
 type Department struct {
 	BaseModels
-	DepartmentName string  `gorm:"not null" json:"department_name"`
-	CompanyID      string  `gorm:"not null" json:"company_id"`
-	CreatedAt      string  `json:"created_at"`
-	UpdatedAt      string  `json:"updated_at"`
+	DepartmentName string  `gorm:"not null"`
+	CompanyID      string  `gorm:"not null"`
 	Company        Company `gorm:"foreignKey:CompanyId"`
+	BaseCUModels
 }
 
 // TableName ...
