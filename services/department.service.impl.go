@@ -36,3 +36,8 @@ func (DepartmentServiceImpl) GetDepartmentAll() ([]models.Department, error) {
 func (DepartmentServiceImpl) UpdateDepartment(id string, m *models.Department) (*models.Department, error) {
 	return departmentDao.UpdateDepartment(id, m)
 }
+
+// GetDepartmentByCompanyID ...
+func (DepartmentServiceImpl) GetDepartmentByCompanyID(id string) ([]models.Department, error) {
+	return departmentDao.GetDepartmentByCompanyID(id)
+}

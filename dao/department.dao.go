@@ -8,4 +8,5 @@ type DepartmentDao interface {
 	GetDepartmentByID(id string) (models.Department, error)
 	GetDepartmentAll() ([]models.Department, error)
 	UpdateDepartment(id string, data *models.Department) (*models.Department, error)
+	GetDepartmentByCompanyID(id string) ([]models.Department, error)
 }

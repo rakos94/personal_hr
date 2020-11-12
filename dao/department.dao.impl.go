@@ -44,3 +44,13 @@ func (DepartmentDaoImpl) UpdateDepartment(id string, data *models.Department) (*
 
 	return m, nil
 }
+
+// GetDepartmentByCompanyID ...
+func (DepartmentDaoImpl) GetDepartmentByCompanyID(id string) ([]models.Department, error) {
+	m := []models.Department{}
+	result := g.Where("company_id", id).Find(&m)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return m, nil
+}

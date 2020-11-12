@@ -19,6 +19,7 @@ func SetDepartment(c *echo.Group) {
 	c.PUT("/department/:id", updateDepartment)
 	c.GET("/department/:id", getDepartmentByID)
 	c.GET("/department", getDepartmentAll)
+	c.GET("/company/:id/department", getDepartmentByCompanyID)
 }
 
 func createDepartment(c echo.Context) error {
@@ -82,6 +83,22 @@ func getDepartmentByID(c echo.Context) error {
 
 func getDepartmentAll(c echo.Context) error {
 	result, err := departmentService.GetDepartmentAll()
+	if err != nil {
+		return resErr(c, err)
+	}
+
+	var resList []*responses.DepartmentResponse
+	for _, data := range result {
+		rs := responses.NewDepartmentResponse(&data)
+		resList = append(resList, rs)
+	}
+
+	return res(c, resList)
+}
+
+func getDepartmentByCompanyID(c echo.Context) error {
+	id := c.Param("id")
+	result, err := departmentService.GetDepartmentByCompanyID(id)
 	if err != nil {
 		return resErr(c, err)
 	}

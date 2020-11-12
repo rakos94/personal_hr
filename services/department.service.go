@@ -8,4 +8,5 @@ type DepartmentService interface {
 	GetDepartmentByID(id string) (models.Department, error)
 	GetDepartmentAll() ([]models.Department, error)
 	UpdateDepartment(id string, m *models.Department) (*models.Department, error)
+	GetDepartmentByCompanyID(id string) ([]models.Department, error)
 }
