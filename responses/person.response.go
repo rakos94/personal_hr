@@ -15,13 +15,17 @@ type PersonResponse struct {
 }
 
 // NewPersonResponse ...
-func NewPersonResponse(person *models.Person) *PersonResponse {
+func NewPersonResponse(m *models.Person) *PersonResponse {
 	rs := &PersonResponse{}
-	rs.BaseModels = person.BaseModels
-	rs.FirstName = person.FirstName
-	rs.LastName = person.LastName.String
-	rs.Email = person.Email
-	rs.Gender = person.Gender.String
-	rs.BaseCUModels = person.BaseCUModels
+	rs.BaseModels = m.BaseModels
+	rs.FirstName = m.FirstName
+	if m.LastName != nil {
+		rs.LastName = *m.LastName
+	}
+	rs.Email = m.Email
+	if m.Gender != nil {
+		rs.Gender = *m.Gender
+	}
+	rs.BaseCUModels = m.BaseCUModels
 	return rs
 }

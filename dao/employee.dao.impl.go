@@ -49,9 +49,9 @@ func (EmployeeDaoImpl) GetEmployeeCount() (int64, error) {
 }
 
 // GetEmployeeByPersonID ...
-func (EmployeeDaoImpl) GetEmployeeByPersonID(personId string) (models.Employee, error) {
+func (EmployeeDaoImpl) GetEmployeeByPersonID(personID string) (models.Employee, error) {
 	em := models.Employee{}
-	result := g.Where("person_id", personId).First(&em)
+	result := g.Where("person_id", personID).First(&em)
 	if result.Error != nil {
 		return em, result.Error
 	}

@@ -3,6 +3,7 @@ package services
 import (
 	"errors"
 	"log"
+	"personal_hr/configs"
 	"personal_hr/dao"
 	"personal_hr/models"
 
@@ -24,23 +25,44 @@ func (PersonServiceImpl) CreatePerson(person *models.Person) (*models.Person, er
 	return nil, err
 }
 
-// GetPersonById ...
-func (PersonServiceImpl) GetPersonById(id string) (models.Person, error) {
+// GetPersonByID ...
+func (PersonServiceImpl) GetPersonByID(id string) (models.Person, error) {
 	return personDao.GetPersonByID(id)
 }
 
 // Login ...
 func (PersonServiceImpl) Login(email string, pwd string) (models.Person, error) {
 	result, err := personDao.GetPersonByEmail(email)
-	if err == nil && result.Count > 0 {
-		var err = bcrypt.CompareHashAndPassword([]byte(result.Password), []byte(pwd))
-		if err != nil {
-			log.Println(err.Error())
-		}
-		if err == nil {
-			return result, nil
-		}
+	if err != nil {
+		return models.Person{}, errors.New("Username/password not found")
 	}
 
-	return models.Person{}, errors.New("Username/password not found")
+	err = bcrypt.CompareHashAndPassword([]byte(result.Password), []byte(pwd))
+	if err != nil {
+		log.Println(err.Error())
+		return models.Person{}, err
+	}
+
+	result.Token, err = configs.CreateJwtToken(result.Email)
+	if err != nil {
+		log.Println(err.Error())
+		return models.Person{}, err
+	}
+
+	return result, nil
+}
+
+// UpdatePerson ...
+func (PersonServiceImpl) UpdatePerson(id string, person *models.Person) (*models.Person, error) {
+	return personDao.UpdatePerson(id, person)
+}
+
+// UpdatePassword ...
+func (s PersonServiceImpl) UpdatePassword(id string, password string) error {
+	result, err := bcrypt.GenerateFromPassword([]byte(password), 4)
+	if err != nil {
+		return err
+	}
+
+	return personDao.UpdatePassword(id, string(result))
 }

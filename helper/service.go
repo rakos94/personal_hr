@@ -17,3 +17,12 @@ func ConvertRequest(i interface{}, m interface{}) {
 		fmt.Println(err)
 	}
 }
+
+// ConvertMap convert struct to map
+func ConvertMap(i interface{}) map[string]interface{} {
+	var result map[string]interface{}
+	inrec, _ := json.Marshal(i)
+	json.Unmarshal(inrec, &result)
+
+	return result
+}

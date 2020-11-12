@@ -8,15 +8,15 @@ import (
 	"strconv"
 )
 
-// EmployeeServiceImpl ...
-type EmployeeServiceImpl struct{}
-
 var employeeDao dao.EmployeeDao = dao.EmployeeDaoImpl{}
 var personService PersonService = PersonServiceImpl{}
 
+// EmployeeServiceImpl ...
+type EmployeeServiceImpl struct{}
+
 // CreateEmployee ...
-func (EmployeeServiceImpl) CreateEmployee(emp *models.Employee) (*models.Employee, error) {
-	_, err := personService.GetPersonById(emp.PersonID)
+func (s EmployeeServiceImpl) CreateEmployee(emp *models.Employee) (*models.Employee, error) {
+	_, err := personService.GetPersonByID(emp.PersonID)
 	if err != nil {
 		return nil, err
 	}
@@ -31,7 +31,16 @@ func (EmployeeServiceImpl) CreateEmployee(emp *models.Employee) (*models.Employe
 	}
 
 	emp.Nip = GenerateNIP(count)
-	return employeeDao.CreateEmployee(emp)
+	create, err := employeeDao.CreateEmployee(emp)
+	if err != nil {
+		return nil, err
+	}
+
+	first, err := s.GetEmployeeByID(create.Id)
+	if err != nil {
+		return nil, err
+	}
+	return &first, nil
 }
 
 // GetEmployeeByID ...

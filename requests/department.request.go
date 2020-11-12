@@ -2,6 +2,6 @@ package requests
 
 // DepartmentRequest ...
 type DepartmentRequest struct {
-	DepartmentName string `json:"department_name" validate:"required"`
-	CompanyId      string `json:"company_id" validate:"required"`
+	DepartmentName string `form:"department_name" validate:"required"`
+	CompanyID      string `form:"company_id" validate:"required"`
 }
