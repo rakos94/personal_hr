@@ -5,9 +5,9 @@ import "personal_hr/models"
 // EmployeeResponse ...
 type EmployeeResponse struct {
 	models.BaseModels
-	Nip      string        `json:"nip"`
-	PersonID string        `json:"person_id"`
-	Person   models.Person ``
+	Nip      string          `json:"nip"`
+	PersonID string          `json:"person_id"`
+	Person   *PersonResponse ``
 	models.BaseCUModels
 }
 
@@ -17,7 +17,7 @@ func NewEmployeeResponse(m *models.Employee) *EmployeeResponse {
 		BaseModels:   m.BaseModels,
 		Nip:          m.Nip,
 		PersonID:     m.PersonID,
-		Person:       m.Person,
+		Person:       NewPersonResponse(&m.Person),
 		BaseCUModels: m.BaseCUModels,
 	}
 }

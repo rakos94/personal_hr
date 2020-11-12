@@ -50,5 +50,19 @@ func (PersonServiceImpl) Login(email string, pwd string) (models.Person, error) 
 	}
 
 	return result, nil
+}
 
+// UpdatePerson ...
+func (PersonServiceImpl) UpdatePerson(id string, person *models.Person) (*models.Person, error) {
+	return personDao.UpdatePerson(id, person)
+}
+
+// UpdatePassword ...
+func (s PersonServiceImpl) UpdatePassword(id string, password string) error {
+	result, err := bcrypt.GenerateFromPassword([]byte(password), 4)
+	if err != nil {
+		return err
+	}
+
+	return personDao.UpdatePassword(id, string(result))
 }

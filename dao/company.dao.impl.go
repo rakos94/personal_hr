@@ -40,13 +40,13 @@ func (CompanyDaoImpl) GetCompanyAll() ([]models.Company, error) {
 }
 
 // UpdateCompany ...
-func (CompanyDaoImpl) UpdateCompany(id string, data *models.Company) (models.Company, error) {
-	m := models.Company{}
-	first := g.Where("id", id).First(&m)
+func (CompanyDaoImpl) UpdateCompany(id string, data *models.Company) (*models.Company, error) {
+	m := &models.Company{}
+	first := g.Where("id", id).First(m)
 	if first.Error != nil {
 		return m, first.Error
 	}
-	update := g.Model(&m).Updates(data)
+	update := g.Model(m).Updates(data)
 	if update.Error != nil {
 		return m, update.Error
 	}

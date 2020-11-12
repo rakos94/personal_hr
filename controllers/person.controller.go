@@ -19,7 +19,9 @@ var personService services.PersonService = services.PersonServiceImpl{}
 func SetPerson(c *echo.Group, e *echo.Echo) {
 	e.POST("/person", createPerson)
 	e.POST("/api/login", login)
+	c.PUT("/person/:id", updatePerson)
 	c.GET("/person/:id", getPersonByID)
+	c.PUT("/person/:id/password-update", updatePassword)
 	c.GET("/user", getUser)
 }
 
@@ -83,4 +85,48 @@ func getUser(c echo.Context) error {
 	claims := user.Claims.(jwt.MapClaims)
 	fmt.Println(claims)
 	return res(c, claims)
+}
+
+func updatePerson(c echo.Context) error {
+	id := c.Param("id")
+	req := &requests.PersonUpdateRequest{}
+
+	if err := c.Bind(req); err != nil {
+		return c.String(http.StatusBadRequest, err.Error())
+	}
+
+	if err := c.Validate(req); err != nil {
+		return resValErr(c, err)
+	}
+
+	data := &models.Person{}
+	helper.ConvertRequest(req, data)
+
+	updated, err := personService.UpdatePerson(id, data)
+	if err != nil {
+		return resErr(c, err)
+	}
+
+	rs := responses.NewPersonResponse(updated)
+	return res(c, rs)
+}
+
+func updatePassword(c echo.Context) error {
+	id := c.Param("id")
+	req := &requests.PersonPasswordRequest{}
+
+	if err := c.Bind(req); err != nil {
+		return resErr(c, err)
+	}
+
+	if err := c.Validate(req); err != nil {
+		return resValErr(c, err)
+	}
+
+	err := personService.UpdatePassword(id, req.Password)
+	if err != nil {
+		return resErr(c, err)
+	}
+
+	return res(c, "Success update password")
 }

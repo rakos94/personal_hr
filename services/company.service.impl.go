@@ -26,6 +26,6 @@ func (CompanyServiceImpl) GetCompanyAll() ([]models.Company, error) {
 }
 
 // UpdateCompany ...
-func (CompanyServiceImpl) UpdateCompany(id string, company *models.Company) (models.Company, error) {
+func (CompanyServiceImpl) UpdateCompany(id string, company *models.Company) (*models.Company, error) {
 	return companyDao.UpdateCompany(id, company)
 }

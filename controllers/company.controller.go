@@ -64,7 +64,7 @@ func updateCompany(c echo.Context) error {
 		return resErr(c, err)
 	}
 
-	rs := responses.NewCompanyResponse(&updated)
+	rs := responses.NewCompanyResponse(updated)
 	return res(c, rs)
 }
 
