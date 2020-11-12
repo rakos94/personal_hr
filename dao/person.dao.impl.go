@@ -17,6 +17,17 @@ func (PersonDaoImpl) CreatePerson(person *models.Person) (*models.Person, error)
 	return nil, result.Error
 }
 
+// GetPersonAll ...
+func (PersonDaoImpl) GetPersonAll() ([]models.Person, error) {
+	data := []models.Person{}
+	result := g.Find(&data)
+	if result.Error != nil {
+		return data, result.Error
+	}
+
+	return data, nil
+}
+
 // GetPersonByID ...
 func (PersonDaoImpl) GetPersonByID(id string) (models.Person, error) {
 	data := models.Person{}

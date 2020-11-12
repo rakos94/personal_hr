@@ -7,25 +7,30 @@ import (
 // PersonResponse ...
 type PersonResponse struct {
 	models.BaseModels
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
-	Email     string `json:"email"`
-	Gender    string `json:"gender"`
+	FirstName string  `json:"first_name"`
+	LastName  *string `json:"last_name"`
+	Email     string  `json:"email"`
+	Gender    *string `json:"gender"`
 	models.BaseCUModels
 }
 
 // NewPersonResponse ...
 func NewPersonResponse(m *models.Person) *PersonResponse {
-	rs := &PersonResponse{}
-	rs.BaseModels = m.BaseModels
-	rs.FirstName = m.FirstName
-	if m.LastName != nil {
-		rs.LastName = *m.LastName
+	return &PersonResponse{
+		BaseModels:   m.BaseModels,
+		FirstName:    m.FirstName,
+		LastName:     m.LastName,
+		Email:        m.Email,
+		Gender:       m.Gender,
+		BaseCUModels: m.BaseCUModels,
 	}
-	rs.Email = m.Email
-	if m.Gender != nil {
-		rs.Gender = *m.Gender
+}
+
+// NewListPersonResponse ...
+func NewListPersonResponse(list []models.Person) []PersonResponse {
+	var responses []PersonResponse
+	for _, d := range list {
+		responses = append(responses, *NewPersonResponse(&d))
 	}
-	rs.BaseCUModels = m.BaseCUModels
-	return rs
+	return responses
 }

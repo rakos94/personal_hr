@@ -17,12 +17,33 @@ var personService services.PersonService = services.PersonServiceImpl{}
 
 // SetPerson ...
 func SetPerson(c *echo.Group, e *echo.Echo) {
-	e.POST("/person", createPerson)
 	e.POST("/api/login", login)
-	c.PUT("/person/:id", updatePerson)
+	e.POST("/person", createPerson)
+	c.GET("/person", getPersonAll)
 	c.GET("/person/:id", getPersonByID)
+	c.PUT("/person/:id", updatePerson)
 	c.PUT("/person/:id/password-update", updatePassword)
 	c.GET("/user", getUser)
+}
+
+func login(c echo.Context) error {
+	data := &requests.Login{}
+
+	if err := c.Bind(data); err != nil {
+		return c.String(http.StatusBadRequest, err.Error())
+	}
+
+	if err := c.Validate(data); err != nil {
+		return resValErr(c, err)
+	}
+
+	result, err := personService.Login(data.Email, data.Password)
+	if err != nil {
+		return resErr(c, err)
+	}
+
+	rs := responses.NewLoginResponse(&result)
+	return res(c, rs)
 }
 
 func createPerson(c echo.Context) error {
@@ -48,23 +69,13 @@ func createPerson(c echo.Context) error {
 	return res(c, rs)
 }
 
-func login(c echo.Context) error {
-	data := &requests.Login{}
-
-	if err := c.Bind(data); err != nil {
-		return c.String(http.StatusBadRequest, err.Error())
-	}
-
-	if err := c.Validate(data); err != nil {
-		return resValErr(c, err)
-	}
-
-	result, err := personService.Login(data.Email, data.Password)
+func getPersonAll(c echo.Context) error {
+	result, err := personService.GetPersonAll()
 	if err != nil {
 		return resErr(c, err)
 	}
 
-	rs := responses.NewLoginResponse(&result)
+	rs := responses.NewListPersonResponse(result)
 	return res(c, rs)
 }
 
@@ -78,13 +89,6 @@ func getPersonByID(c echo.Context) error {
 
 	rs := responses.NewPersonResponse(&result)
 	return res(c, rs)
-}
-
-func getUser(c echo.Context) error {
-	user := c.Get("user").(*jwt.Token)
-	claims := user.Claims.(jwt.MapClaims)
-	fmt.Println(claims)
-	return res(c, claims)
 }
 
 func updatePerson(c echo.Context) error {
@@ -129,4 +133,11 @@ func updatePassword(c echo.Context) error {
 	}
 
 	return res(c, "Success update password")
+}
+
+func getUser(c echo.Context) error {
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	fmt.Println(claims)
+	return res(c, claims)
 }

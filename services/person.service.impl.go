@@ -15,21 +15,6 @@ var personDao dao.PersonDao = dao.PersonDaoImpl{}
 // PersonServiceImpl ...
 type PersonServiceImpl struct{}
 
-// CreatePerson ...
-func (PersonServiceImpl) CreatePerson(person *models.Person) (*models.Person, error) {
-	result, err := bcrypt.GenerateFromPassword([]byte(person.Password), 4)
-	if err == nil {
-		person.Password = string(result)
-		return personDao.CreatePerson(person)
-	}
-	return nil, err
-}
-
-// GetPersonByID ...
-func (PersonServiceImpl) GetPersonByID(id string) (models.Person, error) {
-	return personDao.GetPersonByID(id)
-}
-
 // Login ...
 func (PersonServiceImpl) Login(email string, pwd string) (models.Person, error) {
 	result, err := personDao.GetPersonByEmail(email)
@@ -50,6 +35,26 @@ func (PersonServiceImpl) Login(email string, pwd string) (models.Person, error) 
 	}
 
 	return result, nil
+}
+
+// CreatePerson ...
+func (PersonServiceImpl) CreatePerson(person *models.Person) (*models.Person, error) {
+	result, err := bcrypt.GenerateFromPassword([]byte(person.Password), 4)
+	if err == nil {
+		person.Password = string(result)
+		return personDao.CreatePerson(person)
+	}
+	return nil, err
+}
+
+// GetPersonAll ...
+func (PersonServiceImpl) GetPersonAll() ([]models.Person, error) {
+	return personDao.GetPersonAll()
+}
+
+// GetPersonByID ...
+func (PersonServiceImpl) GetPersonByID(id string) (models.Person, error) {
+	return personDao.GetPersonByID(id)
 }
 
 // UpdatePerson ...
