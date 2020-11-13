@@ -24,6 +24,7 @@ var tables = []interface{}{
 
 func Conn() (*gorm.DB, error) {
 	pg := fmt.Sprintf("host= %v user=%v password=%v dbname=%v port=%v sslmode=%v", host, user, pass, dbname, port, sslmode)
+	//postgresql://103.30.180.34:9595/booting#spring.datasource.username=postgres#spring.datasource.password=bootlawen123
 	db, err := gorm.Open(postgres.Open(pg), &gorm.Config{})
 
 	if err != nil {

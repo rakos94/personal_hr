@@ -3,9 +3,9 @@ package dao
 import "personal_hr/models"
 
 type ProvinceDao interface {
-	CreateProvince(data * models.Provinces)(*models.Provinces, error)
-	GetCountryAll()([]models.Country,error)
-	GetCountryById(id string)(models.Country,error)
-	PutCountry(id string,data*models.Country)error
-	DeleteCountry(id string)error
+	CreateProvince(data * models.Provinces)(error)
+	//GetProvincesAll()([]models.Provinces,error)
+	//GetProvincesById(id string)(models.Provinces,error)
+	//PutProvinces(id string,data*models.Provinces)error
+	//DeleteProvinces(id string)error
 }
