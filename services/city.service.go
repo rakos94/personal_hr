@@ -1,8 +1,8 @@
-package dao
+package services
 
 import "personal_hr/models"
 
-type CityDao interface {
+type CityService interface {
 	CreateCity(data *models.City)(error)
 	GetCityAll()([]models.City,error)
 	GetCityById(id string)(models.City,error)

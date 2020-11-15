@@ -7,58 +7,57 @@ import (
 	"personal_hr/services"
 )
 
-var countryService services.CountryService =services.CountryServiceImpl{}
-
-func SetCountry(c *echo.Group)  {
-	c.POST("/country", CreateCountry)
-	c.GET("/country",GetCountryAll)
-	c.GET("/country/:id",GetCountryById)
-	c.PUT("/country/:id",UpdateCountry)
-	c.DELETE("/country/:id",DeleteCountry)
-
+var provinceService services.ProvinceService = services.ProvinceServiceImpl{}
+func SetProvince(c *echo.Group)  {
+	c.POST("/province",CreateProvince)
+	c.GET("/province",GetProvinceAll)
+	c.GET("/province/:id",GetProvinceById)
+	c.PUT("/province/:id",UpdateProvince)
+	c.DELETE("/province/:id",DeleteProvince)
 }
-func CreateCountry(c echo.Context)error  {
-	data := new(models.Country)
+
+func CreateProvince(c echo.Context)error  {
+	data  :=  new(models.Provinces)
 	if err:=  c.Bind(data);err !=nil{
 		return c.JSON(http.StatusBadRequest,err)
 	}
-	err := countryService.CreateCountry(data)
+	err := provinceService.CreateProvince(data)
 	if err!=nil{
 		return c.JSON(http.StatusBadRequest,err)
 	}
 	return c.JSON(http.StatusOK,err)
 }
-func GetCountryAll(c echo.Context)(error)  {
-	data,err := countryService.GetCountryAll()
+func GetProvinceAll(c echo.Context)error  {
+	data,err := provinceService.GetProvinceAll()
 	if err!=nil{
 		return c.JSON(http.StatusBadRequest,err)
 	}
 	return c.JSON(http.StatusOK,data)
 }
-func GetCountryById(c echo.Context)(error)  {
+func GetProvinceById(c echo.Context)error  {
 	id:= c.Param("id")
 
-	data,err:=countryService.GetCountryById(id)
+	data,err:=provinceService.GetProvinceById(id)
 	if err !=nil{
 		return c.String(http.StatusBadRequest,err.Error())
 	}
 	return c.JSON(http.StatusOK,data)
 }
-func UpdateCountry(c echo.Context)error  {
+func UpdateProvince(c echo.Context)error  {
 	id:= c.Param("id")
-	data := new(models.Country)
+	data := new(models.Provinces)
 	if err:=  c.Bind(data);err !=nil{
 		return c.JSON(http.StatusBadRequest,err)
 	}
-	err:=countryService.UpdateCountry(id,data)
+	err:=provinceService.UpdateProvince(id,data)
 	if err !=nil{
 		return c.String(http.StatusBadRequest,err.Error())
 	}
 	return c.JSON(http.StatusOK,data)
 }
-func DeleteCountry(c echo.Context)error  {
+func DeleteProvince(c echo.Context)error  {
 	id:=c.Param("id")
-	err:= countryService.DeleteCountry(id)
+	err:= provinceService.DeleteProvince(id)
 	if err !=nil{
 		return c.String(http.StatusBadRequest,err.Error())
 	}
