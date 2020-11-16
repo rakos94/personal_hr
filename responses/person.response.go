@@ -1,29 +1,26 @@
 package responses
 
 import (
-	"log"
+	"personal_hr/helper"
 	"personal_hr/models"
-
-	"gorm.io/datatypes"
 )
 
 // PersonResponse ...
 type PersonResponse struct {
 	models.BaseModels
-	FirstName         string         `json:"first_name"`
-	LastName          *string        `json:"last_name"`
-	Email             string         `json:"email"`
-	BirthPlace        *string        `json:"birth_place"`
-	BirthDate         datatypes.Date `json:"birth_date"`
-	Mobile            *string        `json:"mobile"`
-	Gender            string         `json:"gender"`
-	IsFromRecruitment bool           `json:"is_from_recruitment"`
+	FirstName         string      `json:"first_name"`
+	LastName          *string     `json:"last_name"`
+	Email             string      `json:"email"`
+	BirthPlace        *string     `json:"birth_place"`
+	BirthDate         helper.Date `json:"birth_date"`
+	Mobile            *string     `json:"mobile"`
+	Gender            string      `json:"gender"`
+	IsFromRecruitment bool        `json:"is_from_recruitment"`
 	models.BaseCUModels
 }
 
 // NewPersonResponse ...
 func NewPersonResponse(m *models.Person) *PersonResponse {
-	log.Println(m)
 	return &PersonResponse{
 		BaseModels:        m.BaseModels,
 		FirstName:         m.FirstName,
