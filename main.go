@@ -33,6 +33,8 @@ func main() {
 	controllers.SetPeronFamilyAddress(jwtGroup)
 	controllers.SetProvince(jwtGroup)
 	controllers.SetCity(jwtGroup)
+	controllers.SetEducation(jwtGroup)
+	controllers.SetAddress(jwtGroup)
 
 	//start server
 	e.Logger.Fatal(e.Start(":1234"))

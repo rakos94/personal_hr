@@ -20,17 +20,3 @@ type Address struct {
 func (Address) TableName() string {
 	return "cor_person_addresses"
 }
-
-// // ConvertFromRequest ...
-// func (Person) ConvertFromRequest(r *requests.PersonUpdateRequest) *Person {
-// 	return &Person{
-// 		FirstName:         r.FirstName,
-// 		LastName:          r.LastName,
-// 		Email:             r.Email,
-// 		BirthPlace:        r.BirthPlace,
-// 		BirthDate:         datatypes.Date(r.BirthDate),
-// 		Mobile:            r.Mobile,
-// 		Gender:            r.Gender,
-// 		IsFromRecruitment: r.IsFromRecruitment,
-// 	}
-// }
