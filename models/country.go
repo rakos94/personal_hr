@@ -8,5 +8,5 @@ type Country struct {
 }
 
 func (Country) TableName() string {
-	return "tb_country"
+	return "cor_country"
 }

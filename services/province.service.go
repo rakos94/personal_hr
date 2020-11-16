@@ -1,8 +1,8 @@
-package dao
+package services
 
 import "personal_hr/models"
 
-type ProvinceDao interface {
+type ProvinceService interface {
 	CreateProvince(data * models.Provinces)(error)
 	GetProvinceAll()([]models.Provinces,error)
 	GetProvinceById(id string)(models.Provinces,error)

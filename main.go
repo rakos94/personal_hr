@@ -29,6 +29,10 @@ func main() {
 	controllers.SetInit(e)
 	controllers.SetPerson(jwtGroup, e)
 	controllers.SetCountry(jwtGroup)
+	controllers.SetPeronFamily(jwtGroup)
+	controllers.SetPeronFamilyAddress(jwtGroup)
+	controllers.SetProvince(jwtGroup)
+	controllers.SetCity(jwtGroup)
 
 	//start server
 	e.Logger.Fatal(e.Start(":1234"))

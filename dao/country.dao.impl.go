@@ -29,7 +29,7 @@ func (CountryDaoImpl)GetCountryById(id string)(models.Country,error)  {
 	return c,result.Error
 
 }
-func (CountryDaoImpl)PutCountry(id string,data*models.Country)error  {
+func (CountryDaoImpl)UpdateCountry(id string,data*models.Country)error  {
 	var m = new(models.Country)
 	first := g.Where("id",id).First(&m)
 	if first.Error != nil {

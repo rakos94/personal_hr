@@ -17,12 +17,12 @@ func (CountryServiceImpl)GetCountryAll()([]models.Country,error)  {
 func (CountryServiceImpl)GetCountryById(id string)(models.Country,error)   {
 	return countryDao.GetCountryById(id)
 }
-func (CountryServiceImpl)PutCountry(id string,data*models.Country)error  {
+func (CountryServiceImpl)UpdateCountry(id string,data*models.Country)error  {
 	_,err:= countryDao.GetCountryById(id)
 	if err!=nil {
 		return err
 	}
-	return countryDao.PutCountry(id,data)
+	return countryDao.UpdateCountry(id,data)
 }
 func (CountryServiceImpl)DeleteCountry(id string)error  {
 	return countryDao.DeleteCountry(id)
