@@ -10,6 +10,8 @@ import (
 
 var tables = []interface{}{
 	&models.Person{},
+	&models.Address{},
+	&models.Education{},
 	&models.Location{},
 	&models.City{},
 	&models.Country{},
