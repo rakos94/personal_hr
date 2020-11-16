@@ -2,10 +2,7 @@ package controllers
 
 import (
 	"fmt"
-	"log"
 	"net/http"
-	"personal_hr/helper"
-	"personal_hr/models"
 	"personal_hr/requests"
 	"personal_hr/responses"
 	"personal_hr/services"
@@ -49,19 +46,13 @@ func login(c echo.Context) error {
 
 func createPerson(c echo.Context) error {
 	req := &requests.PersonRequest{}
-
-	if err := c.Bind(req); err != nil {
-		return c.String(http.StatusBadRequest, err.Error())
-	}
+	req = req.Convert(c)
 
 	if err := c.Validate(req); err != nil {
 		return resValErr(c, err)
 	}
 
-	data := &models.Person{}
-	helper.ConvertRequest(req, data)
-
-	result, err := personService.CreatePerson(data)
+	result, err := personService.CreatePerson(req.Model())
 	if err != nil {
 		return resErr(c, err)
 	}
@@ -93,34 +84,20 @@ func getPersonByID(c echo.Context) error {
 }
 
 func updatePerson(c echo.Context) error {
-	// id := c.Param("id")
-	// req := &requests.PersonUpdateRequest{}
+	id := c.Param("id")
+	req := &requests.PersonUpdateRequest{}
+	req = req.Convert(c)
 
-	log.Println(c.FormValue("birth_date"))
-	// if err := c.Bind(req); err != nil {
-	// 	log.Println("Bind")
-	// 	log.Println(err)
-	// 	return c.String(http.StatusBadRequest, err.Error())
-	// }
+	if err := c.Validate(req); err != nil {
+		return resValErr(c, err)
+	}
 
-	// if err := c.Validate(req); err != nil {
-	// 	return resValErr(c, err)
-	// }
+	result, err := personService.UpdatePerson(id, req.Model())
+	if err != nil {
+		return resErr(c, err)
+	}
 
-	// data := &models.Person{}
-	// data.ConvertFromRequest(req)
-	// // req.NewPersonModel()
-	// log.Println(req.BirthDate)
-	// // helper.ConvertRequest(req, data)
-	// log.Println(data.BirthDate)
-
-	// updated, err := personService.UpdatePerson(id, data)
-	// if err != nil {
-	// 	return resErr(c, err)
-	// }
-
-	// rs := responses.NewPersonResponse(updated)
-	rs := "Test"
+	rs := responses.NewPersonResponse(result)
 	return res(c, rs)
 }
 
