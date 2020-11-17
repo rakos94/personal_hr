@@ -10,6 +10,12 @@ const (
 	sslmode = "disable"
 )
 
+// APPS
+const (
+	AppPort = "8090"
+	HostCredential = "192.168.15.245:1111"
+)
+
 // JWT
 var (
 	UserIdExample        = "20022012"

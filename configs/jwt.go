@@ -4,7 +4,6 @@ import (
 	"errors"
 	"log"
 	"net/http"
-	"personal_hr/grpc"
 	"strings"
 	"time"
 
@@ -52,6 +51,9 @@ func middlewareCredential(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		reqToken := c.Request().Header.Get("Authorization")
 		splitToken := strings.Split(reqToken, "Bearer ")
+		if len(splitToken) == 1 {
+			return c.JSON(http.StatusUnauthorized, "No token")
+		}
 		reqToken = splitToken[1]
 		err := CheckCredentialToken(reqToken)
 		if err != nil {
@@ -63,7 +65,7 @@ func middlewareCredential(next echo.HandlerFunc) echo.HandlerFunc {
 
 // CheckCredentialToken ...
 func CheckCredentialToken(token string) error {
-	res, err := grpc.Client.ValidateToken(grpc.Ctx,
+	res, err := Client.ValidateToken(Ctx,
 		&pb.Token{Data: token})
 
 	if err != nil {
