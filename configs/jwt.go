@@ -2,7 +2,6 @@ package configs
 
 import (
 	"errors"
-	"fmt"
 	"log"
 	"net/http"
 	"personal_hr/grpc"
@@ -54,7 +53,6 @@ func middlewareCredential(next echo.HandlerFunc) echo.HandlerFunc {
 		reqToken := c.Request().Header.Get("Authorization")
 		splitToken := strings.Split(reqToken, "Bearer ")
 		reqToken = splitToken[1]
-		fmt.Println("TOKEN:", reqToken)
 		err := CheckCredentialToken(reqToken)
 		if err != nil {
 			return c.JSON(http.StatusUnauthorized, err.Error())
