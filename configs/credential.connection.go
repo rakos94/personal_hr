@@ -1,4 +1,4 @@
-package grpc
+package configs
 
 import (
 	"context"
@@ -9,22 +9,20 @@ import (
 	"google.golang.org/grpc"
 )
 
-var host = "192.168.15.245:1111"
-
 // Ctx ...
 var Ctx = context.Background()
 
 // Client ...
 var Client pb.UserServiceClient
 
-// Conn ...
-var Conn grpc.ClientConn
+// GrpcConn ...
+var GrpcConn grpc.ClientConn
 
 // ClientConnect ...
 func ClientConnect() {
-	Conn, err := grpc.Dial(host, grpc.WithInsecure(), grpc.WithBlock())
+	GrpcConn, err := grpc.Dial(HostCredential, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
 		log.Fatal("Not connected err =>", err)
 	}
-	Client = pb.NewUserServiceClient(Conn)
+	Client = pb.NewUserServiceClient(GrpcConn)
 }

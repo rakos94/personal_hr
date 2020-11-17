@@ -5,7 +5,6 @@ import (
 	"log"
 	"personal_hr/configs"
 	"personal_hr/dao"
-	"personal_hr/grpc"
 	"personal_hr/helper"
 	"personal_hr/models"
 	pb "personal_hr/models"
@@ -37,7 +36,7 @@ func (PersonServiceImpl) Login(email string, pwd string) (models.Person, error) 
 		return models.Person{}, err
 	}
 
-	res, err := grpc.Client.Login(grpc.Ctx,
+	res, err := configs.Client.Login(configs.Ctx,
 		&pb.Users{Username: email, Password: pwd})
 	if err != nil {
 		log.Println("Error credential login =>", helper.RPCErrDesc(err))
@@ -63,8 +62,8 @@ func (PersonServiceImpl) CreatePerson(person *models.Person) (*models.Person, er
 		return nil, err
 	}
 
-	// defer grpc.Conn.Close())
-	res, err := grpc.Client.Register(grpc.Ctx,
+	// defer configs.Conn.Close())
+	res, err := configs.Client.Register(configs.Ctx,
 		&pb.Users{Username: person.Email, Password: pwd})
 	if err != nil {
 		log.Println("Error credential register =>", helper.RPCErrDesc(err))
