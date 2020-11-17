@@ -36,6 +36,17 @@ func (AddressDaoImpl) GetAddressByID(id string) (models.Address, error) {
 	return data, nil
 }
 
+// GetAddressByPersonID ...
+func (AddressDaoImpl) GetAddressByPersonID(id string) ([]models.Address, error) {
+	data := []models.Address{}
+	result := g.Preload("Person").Where("person_id", id).Find(&data)
+	if result.Error != nil {
+		return data, result.Error
+	}
+
+	return data, nil
+}
+
 // UpdateAddress ...
 func (AddressDaoImpl) UpdateAddress(id string, data *models.Address) (*models.Address, error) {
 	m := &models.Address{}

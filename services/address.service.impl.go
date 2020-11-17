@@ -34,6 +34,11 @@ func (AddressServiceImpl) GetAddressByID(id string) (models.Address, error) {
 	return addressDao.GetAddressByID(id)
 }
 
+// GetAddressByPersonID ...
+func (AddressServiceImpl) GetAddressByPersonID(id string) ([]models.Address, error) {
+	return addressDao.GetAddressByPersonID(id)
+}
+
 // UpdateAddress ...
 func (AddressServiceImpl) UpdateAddress(id string, data *models.Address) (*models.Address, error) {
 	return addressDao.UpdateAddress(id, data)

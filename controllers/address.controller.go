@@ -16,6 +16,7 @@ func SetAddress(c *echo.Group) {
 	c.GET("/address", getAddressAll)
 	c.GET("/address/:id", getAddressByID)
 	c.PUT("/address/:id", updateAddress)
+	c.GET("/person/:id/address", getAddressByPersonID)
 }
 
 func createAddress(c echo.Context) error {
@@ -54,6 +55,18 @@ func getAddressByID(c echo.Context) error {
 	}
 
 	rs := responses.NewAddressResponse(&result)
+	return res(c, rs)
+}
+
+func getAddressByPersonID(c echo.Context) error {
+	id := c.Param("id")
+
+	result, err := addressService.GetAddressByPersonID(id)
+	if err != nil {
+		return resErr(c, err)
+	}
+
+	rs := responses.NewListAddressResponse(result)
 	return res(c, rs)
 }
 
