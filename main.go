@@ -5,6 +5,7 @@ import (
 	"personal_hr/configs"
 	"personal_hr/controllers"
 	"personal_hr/dao"
+	"personal_hr/grpc"
 	"personal_hr/models"
 	"personal_hr/services"
 
@@ -25,6 +26,8 @@ func main() {
 
 	// set validator
 	e.Validator = &models.CustomValidator{Validator: validator.New()}
+
+	grpc.ClientConnect()
 
 	controllers.SetInit(e)
 	controllers.SetPerson(jwtGroup, e)

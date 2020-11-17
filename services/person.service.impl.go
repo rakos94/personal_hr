@@ -5,7 +5,9 @@ import (
 	"log"
 	"personal_hr/configs"
 	"personal_hr/dao"
+	"personal_hr/grpc"
 	"personal_hr/models"
+	pb "personal_hr/models"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -45,7 +47,22 @@ func (PersonServiceImpl) CreatePerson(person *models.Person) (*models.Person, er
 	}
 
 	person.Password = string(result)
-	return personDao.CreatePerson(person)
+	rs, err := personDao.CreatePerson(person)
+	if err != nil {
+		return nil, err
+	}
+
+	// defer grpc.Conn.Close())
+	res, err := grpc.Client.Register(grpc.Ctx,
+		&pb.Users{Username: person.Email, Password: person.Password})
+	if err != nil {
+		log.Println("Error credential register =>", err)
+		return nil, err
+	}
+
+	log.Println("Credential created ->", res)
+
+	return rs, nil
 }
 
 // GetPersonAll ...
