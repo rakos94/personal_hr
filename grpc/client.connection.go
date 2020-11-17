@@ -9,7 +9,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-var host = "localhost:1111"
+var host = "192.168.15.245:1111"
 
 // Ctx ...
 var Ctx = context.Background()
