@@ -17,7 +17,7 @@ func (PersonFamilyAddressDaoImpl)GetAllPersonFamilyAddess()([]models.PersonFamil
 	var (
 		data []models.PersonFamilyAddres
 	)
-	result :=g.Find(&data)
+	result :=g.Preload("City.Provinces.Country").Preload("PersonFamily.Person").Find(&data)
 	if result.Error !=nil{
 		return  nil,result.Error
 	}
@@ -27,7 +27,7 @@ func (PersonFamilyAddressDaoImpl)GetByIdPersonFamilyAddress(id string)(models.Pe
 	var (
 		data models.PersonFamilyAddres
 	)
-	result := g.Where("id",id).First(&data)
+	result := g.Preload("City.Provinces.Country").Preload("PersonFamily.Person").Where("id",id).First(&data)
 
 	return data,result.Error
 }

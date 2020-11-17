@@ -14,7 +14,7 @@ func (CityDaoImpl)CreateCity(data *models.City)(error)  {
 
 func (CityDaoImpl)GetCityAll()([]models.City,error)  {
 	var  c []models.City
-	result :=g.Find(&c)
+	result :=  g.Preload("Provinces.Country").Find(&c)
 	if result.Error !=nil{
 		return  nil,result.Error
 	}
@@ -22,7 +22,7 @@ func (CityDaoImpl)GetCityAll()([]models.City,error)  {
 }
 func (CityDaoImpl)GetCityById(id string)(models.City,error)  {
 	var c models.City
-	result := g.Where("id",id).First(&c)
+	result := g.Preload("Provinces.Country").Where("id",id).First(&c)
 
 	return c,result.Error
 }

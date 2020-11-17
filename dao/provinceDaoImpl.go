@@ -15,7 +15,7 @@ func (ProvinceDaoImpl)GetProvinceAll()([]models.Provinces,error)  {
 	var (
 		data []models.Provinces
 	)
-	result :=g.Find(&data)
+	result := g.Preload("Country").Find(&data)
 	if result.Error !=nil{
 		return  nil,result.Error
 	}
@@ -25,7 +25,7 @@ func (ProvinceDaoImpl)GetProvinceById(id string)(models.Provinces,error)  {
 	var (
 		data models.Provinces
 	)
-	result := g.Where("id",id).First(&data)
+	result := g.Preload("Country").Where("id",id).First(&data)
 	return data,result.Error
 }
 func (ProvinceDaoImpl)UpdateProvince(id string,data*models.Provinces)error  {

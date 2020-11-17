@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"personal_hr/configs"
 	"personal_hr/controllers"
 	"personal_hr/dao"
@@ -35,6 +34,7 @@ func main() {
 	controllers.SetCity(jwtGroup)
 	controllers.SetEducation(jwtGroup)
 	controllers.SetAddress(jwtGroup)
+	controllers.SetPersonDocument(jwtGroup)
 
 	//start server
 	e.Logger.Fatal(e.Start(":1234"))
@@ -44,8 +44,8 @@ func main() {
 func NewConn() *gorm.DB {
 	g, err := configs.Conn()
 	if err == nil {
-		configs.MigrateSchema(g)
-		fmt.Println("Success Create Table")
+		//configs.MigrateSchema(g)
+		//fmt.Println("Success Create Table")
 	}
 
 	return g

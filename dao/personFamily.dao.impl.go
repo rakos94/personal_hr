@@ -17,7 +17,7 @@ func (PersonFamilyDaoImpl)GetAllPesonFamily()([]models.PersonFamily,error)  {
 	var(
 		data []models.PersonFamily
 	)
-	result :=g.Find(&data)
+	result :=g.Preload("Person").Find(&data)
 	if result.Error !=nil{
 		return  nil,result.Error
 	}
@@ -25,7 +25,7 @@ func (PersonFamilyDaoImpl)GetAllPesonFamily()([]models.PersonFamily,error)  {
 }
 func (PersonFamilyDaoImpl)GetByIdPersonFamily(id string)(models.PersonFamily,error)  {
 	var c models.PersonFamily
-	result := g.Where("id",id).First(&c)
+	result := g.Preload("Person").Where("id",id).First(&c)
 
 	return c,result.Error
 }
