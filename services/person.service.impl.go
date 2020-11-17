@@ -26,13 +26,11 @@ func (PersonServiceImpl) Login(email string, pwd string) (models.Person, error) 
 
 	err = bcrypt.CompareHashAndPassword([]byte(result.Password), []byte(pwd))
 	if err != nil {
-		log.Println(err.Error())
 		return models.Person{}, err
 	}
 
 	result.Token, err = configs.CreateJwtToken(result.Email)
 	if err != nil {
-		log.Println(err.Error())
 		return models.Person{}, err
 	}
 
