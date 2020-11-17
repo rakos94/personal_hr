@@ -2,6 +2,7 @@ package helper
 
 import (
 	"errors"
+	"fmt"
 	"time"
 )
 
@@ -18,6 +19,13 @@ func (t *Timestamp) UnmarshalJSON(data []byte) error {
 	return err
 }
 
+// MarshalJSON ...
+func (t Timestamp) MarshalJSON() ([]byte, error) {
+	//do your serializing here
+	stamp := fmt.Sprintf("\"%s\"", time.Time(t).Format("2006-01-02 15:04:05"))
+	return []byte(stamp), nil
+}
+
 // Date ...
 type Date time.Time
 
@@ -29,6 +37,13 @@ func (t *Date) UnmarshalJSON(data []byte) error {
 	*t = Date(ts)
 
 	return err
+}
+
+// MarshalJSON ...
+func (t Date) MarshalJSON() ([]byte, error) {
+	//do your serializing here
+	stamp := fmt.Sprintf("\"%s\"", time.Time(t).Format("2006-01-02"))
+	return []byte(stamp), nil
 }
 
 func validateDataTime(layout string, data []byte) (time.Time, error) {

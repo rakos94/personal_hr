@@ -1,10 +1,17 @@
 package configs
 
 import (
+	"errors"
+	"log"
+	"net/http"
+	"personal_hr/grpc"
+	"strings"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo/middleware"
+
+	pb "personal_hr/models"
 
 	"github.com/labstack/echo"
 )
@@ -15,10 +22,7 @@ func SetJwt(e *echo.Echo) *echo.Group {
 
 	jwtGroup := e.Group("/api")
 
-	jwtGroup.Use(middleware.JWTWithConfig(middleware.JWTConfig{
-		SigningMethod: SigningMethodExample,
-		SigningKey:    []byte(SecretKeyExample),
-	}))
+	jwtGroup.Use(middlewareCredential)
 
 	return jwtGroup
 }
@@ -42,4 +46,33 @@ func CreateJwtToken(email string) (string, error) {
 	}
 
 	return t, nil
+}
+
+func middlewareCredential(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		reqToken := c.Request().Header.Get("Authorization")
+		splitToken := strings.Split(reqToken, "Bearer ")
+		reqToken = splitToken[1]
+		err := CheckCredentialToken(reqToken)
+		if err != nil {
+			return c.JSON(http.StatusUnauthorized, err.Error())
+		}
+		return next(c)
+	}
+}
+
+// CheckCredentialToken ...
+func CheckCredentialToken(token string) error {
+	res, err := grpc.Client.ValidateToken(grpc.Ctx,
+		&pb.Token{Data: token})
+
+	if err != nil {
+		desc := strings.Split(err.Error(), "desc = ")
+		err = errors.New(desc[1])
+		log.Println("Error validate =>", err)
+		return err
+	}
+
+	log.Println("Success validate =>", res)
+	return nil
 }

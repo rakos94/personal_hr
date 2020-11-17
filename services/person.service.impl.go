@@ -5,7 +5,10 @@ import (
 	"log"
 	"personal_hr/configs"
 	"personal_hr/dao"
+	"personal_hr/grpc"
+	"personal_hr/helper"
 	"personal_hr/models"
+	pb "personal_hr/models"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -34,18 +37,43 @@ func (PersonServiceImpl) Login(email string, pwd string) (models.Person, error) 
 		return models.Person{}, err
 	}
 
-	return result, nil
+	res, err := grpc.Client.Login(grpc.Ctx,
+		&pb.Users{Username: email, Password: pwd})
+	if err != nil {
+		log.Println("Error credential login =>", helper.RPCErrDesc(err))
+		return models.Person{}, err
+	}
+
+	log.Println("Login success ->", res)
+
+	return models.Person{Token: res.Msg}, nil
 }
 
 // CreatePerson ...
 func (PersonServiceImpl) CreatePerson(person *models.Person) (*models.Person, error) {
-	result, err := bcrypt.GenerateFromPassword([]byte(person.Password), 4)
+	pwd := person.Password
+	result, err := bcrypt.GenerateFromPassword([]byte(pwd), 4)
 	if err != nil {
 		return nil, err
 	}
 
 	person.Password = string(result)
-	return personDao.CreatePerson(person)
+	rs, err := personDao.CreatePerson(person)
+	if err != nil {
+		return nil, err
+	}
+
+	// defer grpc.Conn.Close())
+	res, err := grpc.Client.Register(grpc.Ctx,
+		&pb.Users{Username: person.Email, Password: pwd})
+	if err != nil {
+		log.Println("Error credential register =>", helper.RPCErrDesc(err))
+		return nil, err
+	}
+
+	log.Println("Credential created ->", res)
+
+	return rs, nil
 }
 
 // GetPersonAll ...
