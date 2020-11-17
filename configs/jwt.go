@@ -51,6 +51,9 @@ func middlewareCredential(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		reqToken := c.Request().Header.Get("Authorization")
 		splitToken := strings.Split(reqToken, "Bearer ")
+		if len(splitToken) == 1 {
+			return c.JSON(http.StatusUnauthorized, "No token")
+		}
 		reqToken = splitToken[1]
 		err := CheckCredentialToken(reqToken)
 		if err != nil {
