@@ -14,6 +14,8 @@ func SetProvince(c *echo.Group)  {
 	c.GET("/province/:id",GetProvinceById)
 	c.PUT("/province/:id",UpdateProvince)
 	c.DELETE("/province/:id",DeleteProvince)
+	c.GET("/province/:id/:name",GetProvinceByCouAndByName)
+	c.GET("/province/:name",GetProvinceByName)
 }
 
 func CreateProvince(c echo.Context)error  {
@@ -62,4 +64,21 @@ func DeleteProvince(c echo.Context)error  {
 		return c.String(http.StatusBadRequest,err.Error())
 	}
 	return c.JSON(http.StatusOK,"delete done")
+}
+func GetProvinceByCouAndByName(c echo.Context)error  {
+	id:= c.Param("id")
+	name:= c.Param("name")
+	data,err:= provinceService.GetProvinceByCouAndByName(id,name)
+	if err!= nil{
+		return c.String(http.StatusBadRequest,err.Error())
+	}
+	return c.JSON(http.StatusOK,data)
+}
+func GetProvinceByName(c echo.Context) error {
+	name:= c.Param("name")
+	data,err:= provinceService.GetProvinceByName(name)
+	if err!= nil{
+		return c.String(http.StatusBadRequest,err.Error())
+	}
+	return c.JSON(http.StatusOK,data)
 }

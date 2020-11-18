@@ -5,6 +5,7 @@ type PersonDocument struct {
 	Name string `gorm:"column:name" json:"name"`
 	Description string `gorm:"column:description" json:"description"`
 	FileDocument string `gorm:"column:file_document" json:"file_document"`
+	FileType string `gorm:"column:file_type" json:"file_type"`
 	PersonId string `gorm:"column:person_id" json:"person_id"`
 	Person Person `gorm:"foreignKey:person_id" json:"person"`
 }

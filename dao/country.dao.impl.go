@@ -50,3 +50,11 @@ func (CountryDaoImpl)DeleteCountry(id string)error  {
 	}
 	return nil
 }
+func (CountryDaoImpl)GetCountryByName(name string)([]models.Country,error)  {
+	var c []models.Country
+	data := g.Where("name Like ? " ,"%"+name+"%").Find(&c)
+	if data.Error != nil{
+		return c,data.Error
+	}
+	return c,nil
+}

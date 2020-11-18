@@ -1,30 +1,30 @@
 package services
 
 import (
-	"fmt"
 	"personal_hr/dao"
 	"personal_hr/models"
-
 )
 
 var personFamilyDao dao.PersonFamilyFDao = dao.PersonFamilyDaoImpl{}
 var personService PersonService =PersonServiceImpl{}
+var personRestService PersonRestService = PersonRestServiceImpl{}
 
 type PersonFamilyServiceImpl struct {}
 
 func (PersonFamilyServiceImpl) CreatePersonFamily(data *models.PersonFamily) (error) {
-	fmt.Println("service",data)
-	_,err := personService.GetPersonByID(data.PersonId)
+	_,err := personRestService.GetRestPersonById(data.PersonId)
 	if err!= nil{
 		return err
 	}
 	return personFamilyDao.CreatePersonFamily(data)
 }
 func (PersonFamilyServiceImpl)GetAllPesonFamily()([]models.PersonFamily,error)  {
+
 	return personFamilyDao.GetAllPesonFamily()
 }
 
 func (PersonFamilyServiceImpl)GetByIdPersonFamily(id string)(models.PersonFamily,error)  {
+
 	return personFamilyDao.GetByIdPersonFamily(id)
 }
 

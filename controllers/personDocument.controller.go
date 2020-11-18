@@ -11,6 +11,7 @@ var personDocumentService services.PersonDocumentService = services.PersonDocume
 
 func SetPersonDocument(e *echo.Group)  {
 	e.POST("/person-document",CreatePersonDocumnt)
+	e.GET("/person-document/:id",GetByIdPersonDocument)
 }
 
 func CreatePersonDocumnt(c echo.Context)error  {
@@ -23,4 +24,13 @@ func CreatePersonDocumnt(c echo.Context)error  {
 		return c.String(http.StatusBadRequest, err.Error())
 	}
 	return c.JSON(http.StatusOK,err)
+}
+func GetByIdPersonDocument(c echo.Context)error  {
+	id:= c.Param("id")
+	data,err:=personDocumentService.GetByIdPersonDocument(id)
+	if err !=nil{
+		return c.String(http.StatusBadRequest,err.Error())
+	}
+	return c.JSON(http.StatusOK,data)
+
 }

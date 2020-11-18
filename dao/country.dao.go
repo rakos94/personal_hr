@@ -8,4 +8,5 @@ type CountryDao interface {
 	GetCountryById(id string)(models.Country,error)
 	UpdateCountry(id string,data*models.Country)error
 	DeleteCountry(id string)error
+	GetCountryByName(name string)([]models.Country,error)
 }

@@ -3,6 +3,7 @@ package services
 import (
 	"encoding/base64"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"personal_hr/dao"
 	"personal_hr/models"
@@ -19,7 +20,7 @@ func (PersonDocumentServiceImpl)CreatePersonDocumnt(data *requests.PersonDocumnt
 	path := "F:/goworkspace/src/personal_hr/filepdf"
 	os.Chdir(path)
 	fmt.Println(os.Getwd())
-	f,err:= os.Create(data.Name)
+	f,err:= os.Create(data.Name+data.Filetype)
 	if err!=nil{
 		return err
 	}
@@ -28,16 +29,34 @@ func (PersonDocumentServiceImpl)CreatePersonDocumnt(data *requests.PersonDocumnt
 		return err
 	}
 	if err := f.Sync(); err != nil {
-		panic(err)
+		return err
 	}
 	var m models.PersonDocument
 	m.PersonId=data.PersonId
 	m.Description=data.Description
 	m.Name = data.Name
 	m.FileDocument = path+"/"+data.Name+data.Filetype
+	m.FileType = data.Filetype
 	err = personDocumentDao.CreatePersonDocumnt(&m)
 	if err!=nil{
 		return err
 	}
 	return nil
+}
+func (PersonDocumentServiceImpl)GetByIdPersonDocument(id string)(requests.PersonDocumntRequest,error)  {
+	var data requests.PersonDocumntRequest
+	result, err :=personDocumentDao.GetByIdPersonDocument(id)
+	if err != nil {
+		return  data,err
+	}
+	buff,err := ioutil.ReadFile(result.FileDocument)
+	if err != nil {
+		return  data,err
+	}
+	data.PersonId = result.PersonId
+	data.Name =result.Name
+	data.Description =result.Description
+	data.Filetype =result.FileType
+	data.File = base64.StdEncoding.EncodeToString(buff)
+	return data,nil
 }

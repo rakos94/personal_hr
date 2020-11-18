@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/labstack/echo"
 	"net/http"
 	"personal_hr/models"
@@ -24,10 +23,9 @@ func CreatePersonFamily(c echo.Context) error {
 	if err:=  c.Bind(data);err !=nil{
 		return c.JSON(http.StatusBadRequest,err)
 	}
-	fmt.Println("controller",data)
 	err := personFamilyService.CreatePersonFamily(data)
 	if err!=nil{
-		return c.JSON(http.StatusBadRequest,err)
+		return c.JSON(http.StatusBadRequest,err.Error())
 	}
 	return c.JSON(http.StatusOK,err)
 }

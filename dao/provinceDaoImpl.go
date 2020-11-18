@@ -48,3 +48,23 @@ func (ProvinceDaoImpl)DeleteProvince(id string)error  {
 	}
 	return nil
 }
+func (ProvinceDaoImpl)GetProvinceByCouAndByName(id string, name string)([]models.Provinces,error)  {
+	var(
+		m []models.Provinces
+	)
+	data := g.Where("country_id = ? AND name Like ?", id,"%"+name+"%").Find(&m)
+	if data.Error != nil{
+		return m,data.Error
+	}
+	return m,nil
+}
+func (ProvinceDaoImpl)GetProvinceByName(name string)([]models.Provinces,error)  {
+	var(
+		m []models.Provinces
+	)
+	data := g.Where("name Like ?","%"+name+"%").Find(&m)
+	if data.Error != nil{
+		return m,data.Error
+	}
+	return m,nil
+}

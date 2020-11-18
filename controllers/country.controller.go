@@ -15,6 +15,7 @@ func SetCountry(c *echo.Group)  {
 	c.GET("/country/:id",GetCountryById)
 	c.PUT("/country/:id",UpdateCountry)
 	c.DELETE("/country/:id",DeleteCountry)
+	c.GET("/country/:name",GetCountryByName)
 
 }
 func CreateCountry(c echo.Context)error  {
@@ -63,4 +64,12 @@ func DeleteCountry(c echo.Context)error  {
 		return c.String(http.StatusBadRequest,err.Error())
 	}
 	return c.JSON(http.StatusOK,"delete done")
+}
+func GetCountryByName(c echo.Context)error  {
+	name:=c.Param("name")
+	data,err := countryService.GetCountryByName(name)
+	if err !=nil{
+		return c.JSON(http.StatusBadRequest,err.Error())
+	}
+	return c.JSON(http.StatusOK,data)
 }
