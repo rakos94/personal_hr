@@ -28,13 +28,13 @@ func (p PersonUpdateRequest) Convert(c echo.Context) *PersonUpdateRequest {
 	return &PersonUpdateRequest{
 		FirstName:         GetValue(c, "first_name"),
 		LastName:          GetValue(c, "last_name"),
-		Email:             GetValue(c, "email"),
 		BirthPlace:        GetValue(c, "birth_place"),
 		BirthDate:         ToDate(BirthDate),
 		Mobile:            GetValue(c, "mobile"),
 		Gender:            GetValue(c, "gender"),
 		IsFromRecruitment: IsFromRecruitment,
 		UpdatedBy:         GetValue(c, "updated_by"),
+		// Email:             GetValue(c, "email"),
 	}
 }
 
@@ -43,12 +43,12 @@ func (p PersonUpdateRequest) Model() *models.Person {
 	return &models.Person{
 		FirstName:         p.FirstName,
 		LastName:          &p.LastName,
-		Email:             p.Email,
 		BirthPlace:        &p.BirthPlace,
 		BirthDate:         p.BirthDate,
 		Mobile:            &p.Mobile,
 		Gender:            p.Gender,
 		IsFromRecruitment: p.IsFromRecruitment,
 		UpdatedBy:         p.UpdatedBy,
+		// Email:             p.Email,
 	}
 }
