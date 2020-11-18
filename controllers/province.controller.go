@@ -14,8 +14,8 @@ func SetProvince(c *echo.Group)  {
 	c.GET("/province/:id",GetProvinceById)
 	c.PUT("/province/:id",UpdateProvince)
 	c.DELETE("/province/:id",DeleteProvince)
-	c.GET("/province/:id/:name",GetProvinceByCouAndByName)
-	c.GET("/province/:name",GetProvinceByName)
+	c.GET("/province/:id/name/:name",GetProvinceByCouAndByName)
+	c.GET("/province/name/:name",GetProvinceByName)
 }
 
 func CreateProvince(c echo.Context)error  {

@@ -14,7 +14,7 @@ import (
 
 	"github.com/labstack/echo"
 )
-
+var ReqToken  string;
 func SetJwt(e *echo.Echo) *echo.Group {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
@@ -55,6 +55,7 @@ func middlewareCredential(next echo.HandlerFunc) echo.HandlerFunc {
 			return c.JSON(http.StatusUnauthorized, "No token")
 		}
 		reqToken = splitToken[1]
+		ReqToken= reqToken
 		err := CheckCredentialToken(reqToken)
 		if err != nil {
 			return c.JSON(http.StatusUnauthorized, err.Error())

@@ -27,7 +27,7 @@ func CreatePersonFamily(c echo.Context) error {
 	if err!=nil{
 		return c.JSON(http.StatusBadRequest,err.Error())
 	}
-	return c.JSON(http.StatusOK,err)
+	return c.JSON(http.StatusOK,data)
 }
 func GetAllPesonFamily(c echo.Context)error  {
 	data,err := personFamilyService.GetAllPesonFamily()

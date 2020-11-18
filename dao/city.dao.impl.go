@@ -47,3 +47,23 @@ func (CityDaoImpl)DeleteCity(id string)error  {
 	}
 	return nil
 }
+func (CityDaoImpl)GetCityByProvAndByName(id string, name string)([]models.City,error)  {
+	var(
+		m []models.City
+	)
+	data := g.Preload("Provinces.Country").Where("province_id = ? AND name Like ?", id,"%"+name+"%").Find(&m)
+	if data.Error != nil{
+		return m,data.Error
+	}
+	return m,nil
+}
+func (CityDaoImpl)GetCityByName(name string)([]models.City,error)  {
+	var(
+		m []models.City
+	)
+	data := g.Preload("Provinces.Country").Where("name Like ?", "%"+name+"%").Find(&m)
+	if data.Error != nil{
+		return m,data.Error
+	}
+	return m,nil
+}

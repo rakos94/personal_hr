@@ -3,6 +3,7 @@ package services
 import (
 	"personal_hr/dao"
 	"personal_hr/models"
+	pb_client "personal_hr/pb.client"
 )
 
 var personFamilyDao dao.PersonFamilyFDao = dao.PersonFamilyDaoImpl{}
@@ -12,7 +13,8 @@ var personRestService PersonRestService = PersonRestServiceImpl{}
 type PersonFamilyServiceImpl struct {}
 
 func (PersonFamilyServiceImpl) CreatePersonFamily(data *models.PersonFamily) (error) {
-	_,err := personRestService.GetRestPersonById(data.PersonId)
+	//_,err := personRestService.GetRestPersonById(data.PersonId)
+	_,err := pb_client.GetPersonById(data.PersonId)
 	if err!= nil{
 		return err
 	}

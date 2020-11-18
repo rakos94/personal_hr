@@ -16,6 +16,7 @@ import (
 func main() {
 	e := echo.New()
 	g := NewConn()
+	configs.ConnPb()
 	dao.SetDao(g)
 	services.SetService(g)
 

@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"github.com/labstack/echo"
+	"log"
 	"net/http"
 	"personal_hr/models"
 	"personal_hr/services"
@@ -15,7 +16,7 @@ func SetCountry(c *echo.Group)  {
 	c.GET("/country/:id",GetCountryById)
 	c.PUT("/country/:id",UpdateCountry)
 	c.DELETE("/country/:id",DeleteCountry)
-	c.GET("/country/:name",GetCountryByName)
+	c.GET("/country/name/:name",GetCountryByName)
 
 }
 func CreateCountry(c echo.Context)error  {
@@ -67,6 +68,7 @@ func DeleteCountry(c echo.Context)error  {
 }
 func GetCountryByName(c echo.Context)error  {
 	name:=c.Param("name")
+	log.Println("name :",name)
 	data,err := countryService.GetCountryByName(name)
 	if err !=nil{
 		return c.JSON(http.StatusBadRequest,err.Error())

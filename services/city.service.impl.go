@@ -38,3 +38,10 @@ func (CityServiceImpl)DeleteCity(id string)error  {
 	}
 	return cityDao.DeleteCity(id)
 }
+func (CityServiceImpl)GetCityByProvAndByName(id string, name string)([]models.City,error)  {
+	return cityDao.GetCityByProvAndByName(id,name)
+}
+
+func (CityServiceImpl)GetCityByName(name string)([]models.City,error)  {
+	return cityDao.GetCityByName(name)
+}
