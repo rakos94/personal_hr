@@ -2,6 +2,7 @@ package services
 
 import (
 	"encoding/base64"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -13,6 +14,10 @@ var personDocumentDao dao.PersonDocumentDao = dao.PersonDocumntDaoImpl{}
 type PersonDocumentServiceImpl struct {}
 
 func (PersonDocumentServiceImpl)CreatePersonDocumnt(data *requests.PersonDocumntRequest)error  {
+	ada,_:= personDocumentDao.GetByPersonId(data.PersonId)
+	if ada.PersonId != ""{
+		return errors.New("Documnent Person Sudah ada")
+	}
 	dec,err:=base64.StdEncoding.DecodeString(data.File)
 	if err!=nil{
 		return err
@@ -46,6 +51,23 @@ func (PersonDocumentServiceImpl)CreatePersonDocumnt(data *requests.PersonDocumnt
 func (PersonDocumentServiceImpl)GetByIdPersonDocument(id string)(requests.PersonDocumntRequest,error)  {
 	var data requests.PersonDocumntRequest
 	result, err :=personDocumentDao.GetByIdPersonDocument(id)
+	if err != nil {
+		return  data,err
+	}
+	buff,err := ioutil.ReadFile(result.FileDocument)
+	if err != nil {
+		return  data,err
+	}
+	data.PersonId = result.PersonId
+	data.Name =result.Name
+	data.Description =result.Description
+	data.Filetype =result.FileType
+	data.File = base64.StdEncoding.EncodeToString(buff)
+	return data,nil
+}
+func (PersonDocumentServiceImpl)GetByPersonId(personId string)(requests.PersonDocumntRequest,error)  {
+	var data requests.PersonDocumntRequest
+	result, err :=personDocumentDao.GetByPersonId(personId)
 	if err != nil {
 		return  data,err
 	}

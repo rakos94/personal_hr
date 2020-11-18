@@ -29,6 +29,9 @@ func (CityDaoImpl)GetCityById(id string)(models.City,error)  {
 func (CityDaoImpl)UpdateCity(id string,data*models.City)error  {
 	var m = new(models.City)
 	first := g.Where("id",id).First(&m)
+	//subq:= g.Select("id").Where("name",id).Find(&models.Provinces{})
+	//q:= g.Where("province_id = (?)",subq).Find(&m)
+
 	if first.Error != nil {
 		return first.Error
 	}

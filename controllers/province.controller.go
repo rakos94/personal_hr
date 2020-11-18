@@ -21,18 +21,18 @@ func SetProvince(c *echo.Group)  {
 func CreateProvince(c echo.Context)error  {
 	data  :=  new(models.Provinces)
 	if err:=  c.Bind(data);err !=nil{
-		return c.JSON(http.StatusBadRequest,err)
+		return c.JSON(http.StatusBadRequest,err.Error())
 	}
 	err := provinceService.CreateProvince(data)
 	if err!=nil{
-		return c.JSON(http.StatusBadRequest,err)
+		return c.JSON(http.StatusBadRequest,err.Error())
 	}
 	return c.JSON(http.StatusOK,err)
 }
 func GetProvinceAll(c echo.Context)error  {
 	data,err := provinceService.GetProvinceAll()
 	if err!=nil{
-		return c.JSON(http.StatusBadRequest,err)
+		return c.JSON(http.StatusBadRequest,err.Error())
 	}
 	return c.JSON(http.StatusOK,data)
 }
@@ -41,7 +41,7 @@ func GetProvinceById(c echo.Context)error  {
 
 	data,err:=provinceService.GetProvinceById(id)
 	if err !=nil{
-		return c.String(http.StatusBadRequest,err.Error())
+		return c.JSON(http.StatusBadRequest,err.Error())
 	}
 	return c.JSON(http.StatusOK,data)
 }
@@ -49,11 +49,11 @@ func UpdateProvince(c echo.Context)error  {
 	id:= c.Param("id")
 	data := new(models.Provinces)
 	if err:=  c.Bind(data);err !=nil{
-		return c.JSON(http.StatusBadRequest,err)
+		return c.JSON(http.StatusBadRequest,err.Error())
 	}
 	err:=provinceService.UpdateProvince(id,data)
 	if err !=nil{
-		return c.String(http.StatusBadRequest,err.Error())
+		return c.JSON(http.StatusBadRequest,err.Error())
 	}
 	return c.JSON(http.StatusOK,data)
 }
@@ -61,7 +61,7 @@ func DeleteProvince(c echo.Context)error  {
 	id:=c.Param("id")
 	err:= provinceService.DeleteProvince(id)
 	if err !=nil{
-		return c.String(http.StatusBadRequest,err.Error())
+		return c.JSON(http.StatusBadRequest,err.Error())
 	}
 	return c.JSON(http.StatusOK,"delete done")
 }
@@ -70,7 +70,7 @@ func GetProvinceByCouAndByName(c echo.Context)error  {
 	name:= c.Param("name")
 	data,err:= provinceService.GetProvinceByCouAndByName(id,name)
 	if err!= nil{
-		return c.String(http.StatusBadRequest,err.Error())
+		return c.JSON(http.StatusBadRequest,err.Error())
 	}
 	return c.JSON(http.StatusOK,data)
 }
@@ -78,7 +78,7 @@ func GetProvinceByName(c echo.Context) error {
 	name:= c.Param("name")
 	data,err:= provinceService.GetProvinceByName(name)
 	if err!= nil{
-		return c.String(http.StatusBadRequest,err.Error())
+		return c.JSON(http.StatusBadRequest,err.Error())
 	}
 	return c.JSON(http.StatusOK,data)
 }

@@ -21,7 +21,7 @@ func SetPeronFamily(c *echo.Group)  {
 func CreatePersonFamily(c echo.Context) error {
 	data := new(models.PersonFamily)
 	if err:=  c.Bind(data);err !=nil{
-		return c.JSON(http.StatusBadRequest,err)
+		return c.JSON(http.StatusBadRequest,err.Error())
 	}
 	err := personFamilyService.CreatePersonFamily(data)
 	if err!=nil{
@@ -32,7 +32,7 @@ func CreatePersonFamily(c echo.Context) error {
 func GetAllPesonFamily(c echo.Context)error  {
 	data,err := personFamilyService.GetAllPesonFamily()
 	if err!=nil{
-		return c.JSON(http.StatusBadRequest,err)
+		return c.JSON(http.StatusBadRequest,err.Error())
 	}
 	return c.JSON(http.StatusOK,data)
 }
@@ -41,7 +41,7 @@ func GetByIdPersonFamily(c echo.Context)error  {
 
 	data,err:=personFamilyService.GetByIdPersonFamily(id)
 	if err !=nil{
-		return c.String(http.StatusBadRequest,err.Error())
+		return c.JSON(http.StatusBadRequest,err.Error())
 	}
 	return c.JSON(http.StatusOK,data)
 }
@@ -49,11 +49,11 @@ func UpdatePersonFamily(c echo.Context)error  {
 	id:= c.Param("id")
 	data := new(models.PersonFamily)
 	if err:=  c.Bind(data);err !=nil{
-		return c.JSON(http.StatusBadRequest,err)
+		return c.JSON(http.StatusBadRequest,err.Error())
 	}
 	err:=personFamilyService.UpdatePersonFamily(id,data)
 	if err !=nil{
-		return c.String(http.StatusBadRequest,err.Error())
+		return c.JSON(http.StatusBadRequest,err.Error())
 	}
 	return c.JSON(http.StatusOK,data)
 }
@@ -62,7 +62,7 @@ func DeletePersonFamily(c echo.Context)error  {
 
 	err:=personFamilyService.DeletePersonFamily(id)
 	if err !=nil{
-		return c.String(http.StatusBadRequest,err.Error())
+		return c.JSON(http.StatusBadRequest,err.Error())
 	}
 	return c.JSON(http.StatusOK,"sukses")
 }

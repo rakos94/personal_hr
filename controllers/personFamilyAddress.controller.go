@@ -18,18 +18,18 @@ func SetPeronFamilyAddress(c *echo.Group)  {
 func CreatePersonFamilyAddress(c echo.Context)error  {
 	data := new(models.PersonFamilyAddres)
 	if err:=  c.Bind(data);err !=nil{
-		return c.JSON(http.StatusBadRequest,err)
+		return c.JSON(http.StatusBadRequest,err.Error())
 	}
 	err := personFamilyAddressService.CreatePersonFamilyAddress(data)
 	if err!=nil{
-		return c.JSON(http.StatusBadRequest,err)
+		return c.JSON(http.StatusBadRequest,err.Error())
 	}
 	return c.JSON(http.StatusOK,err)
 }
 func GetAllPersonFamilyAddess(c echo.Context)error  {
 	data,err := personFamilyAddressService.GetAllPersonFamilyAddess()
 	if err!=nil{
-		return c.JSON(http.StatusBadRequest,err)
+		return c.JSON(http.StatusBadRequest,err.Error())
 	}
 	return c.JSON(http.StatusOK,data)
 }
@@ -38,7 +38,7 @@ func GetByIdPersonFamilyAddress(c echo.Context)error  {
 
 	data,err:=personFamilyAddressService.GetByIdPersonFamilyAddress(id)
 	if err !=nil{
-		return c.String(http.StatusBadRequest,err.Error())
+		return c.JSON(http.StatusBadRequest,err.Error())
 	}
 	return c.JSON(http.StatusOK,data)
 }
@@ -46,11 +46,11 @@ func UpdatePersonFamilyAddress(c echo.Context)error  {
 	id:= c.Param("id")
 	data := new(models.PersonFamilyAddres)
 	if err:=  c.Bind(data);err !=nil{
-		return c.JSON(http.StatusBadRequest,err)
+		return c.JSON(http.StatusBadRequest,err.Error())
 	}
 	err:=personFamilyAddressService.UpdatePersonFamilyAddress(id,data)
 	if err !=nil{
-		return c.String(http.StatusBadRequest,err.Error())
+		return c.JSON(http.StatusBadRequest,err.Error())
 	}
 	return c.JSON(http.StatusOK,data)
 }
@@ -59,7 +59,7 @@ func DeletePersonFamilyAddress(c echo.Context)error  {
 
 	err:=personFamilyService.DeletePersonFamily(id)
 	if err !=nil{
-		return c.String(http.StatusBadRequest,err.Error())
+		return c.JSON(http.StatusBadRequest,err.Error())
 	}
 	return c.JSON(http.StatusOK,"sukses")
 }
