@@ -41,5 +41,9 @@ func (AddressServiceImpl) GetAddressByPersonID(id string) ([]models.Address, err
 
 // UpdateAddress ...
 func (AddressServiceImpl) UpdateAddress(id string, data *models.Address) (*models.Address, error) {
+	_, err := cityService.GetCityById(data.CityID)
+	if err != nil {
+		return nil, errors.New("City id not exist")
+	}
 	return addressDao.UpdateAddress(id, data)
 }

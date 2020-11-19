@@ -9,7 +9,7 @@ type Address struct {
 	PostalCode *string ``
 	Phone      *string ``
 	Fax        *string ``
-	IsDefault  bool    `gorm:"not null"`
+	IsDefault  *bool   `gorm:"not null"`
 	CreatedBy  string  `gorm:"not null;default:admin"`
 	UpdatedBy  string  `gorm:"not null;default:admin"`
 	Person     Person  `gorm:"foreignKey:PersonID"`

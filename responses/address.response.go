@@ -14,7 +14,7 @@ type AddressResponse struct {
 	PostalCode *string         `json:"postal_code"`
 	Phone      *string         `json:"phon"`
 	Fax        *string         `json:"fax"`
-	IsDefault  bool            `json:"is_default"`
+	IsDefault  *bool           `json:"is_default"`
 	Person     *PersonResponse `json:"-"`
 	models.BaseCUModels
 }
