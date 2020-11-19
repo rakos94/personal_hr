@@ -1,35 +1,29 @@
 package requests
 
 import (
+	"log"
 	"personal_hr/models"
-	"strconv"
 
 	"github.com/labstack/echo"
 )
 
 // EducationUpdateRequest ...
 type EducationUpdateRequest struct {
-	Institution string  `form:"institution" validate:"required"`
-	Subject     string  `form:"subject" validate:"required"`
-	Grade       float64 `form:"grade" validate:"required"`
-	YearBegin   int     `form:"year_begin"`
-	YearEnd     int     `form:"year_end"`
-	UpdatedBy   string  `form:"updated_by" validate:"required"`
+	Institution string   `form:"institution" json:"institution"`
+	Subject     string   `form:"subject" json:"subject"`
+	Grade       *float64 `form:"grade" json:"grade"`
+	YearBegin   *int     `form:"year_begin" json:"year_begin"`
+	YearEnd     *int     `form:"year_end" json:"year_end"`
+	UpdatedBy   string   `form:"updated_by" json:"updated_by"`
 }
 
 // Convert from echo FormValue
 func (r EducationUpdateRequest) Convert(c echo.Context) *EducationUpdateRequest {
-	Grade, _ := strconv.ParseFloat(GetValue(c, "grade"), 64)
-	YearBegin, _ := strconv.Atoi(GetValue(c, "year_begin"))
-	YearEnd, _ := strconv.Atoi(GetValue(c, "year_end"))
-	return &EducationUpdateRequest{
-		Institution: GetValue(c, "institution"),
-		Subject:     GetValue(c, "subject"),
-		Grade:       Grade,
-		YearBegin:   YearBegin,
-		YearEnd:     YearEnd,
-		UpdatedBy:   GetValue(c, "updated_by"),
+	if err := c.Bind(&r); err != nil {
+		log.Println(err)
 	}
+	log.Println(r)
+	return &r
 }
 
 // Model from request
@@ -37,9 +31,9 @@ func (r EducationUpdateRequest) Model() *models.Education {
 	return &models.Education{
 		Institution: r.Institution,
 		Subject:     r.Subject,
-		Grade:       &r.Grade,
-		YearBegin:   &r.YearBegin,
-		YearEnd:     &r.YearEnd,
+		Grade:       r.Grade,
+		YearBegin:   r.YearBegin,
+		YearEnd:     r.YearEnd,
 		UpdatedBy:   r.UpdatedBy,
 	}
 }
