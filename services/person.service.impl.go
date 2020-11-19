@@ -50,7 +50,8 @@ func (PersonServiceImpl) CreatePerson(person *models.Person) (*models.Person, er
 	res, err := configs.Client.Register(configs.Ctx,
 		&pb.Users{Username: person.Email, Password: pwd})
 	if err != nil {
-		log.Println("Error credential register =>", helper.RPCErrDesc(err))
+		err = helper.RPCErrDesc(err)
+		log.Println("Error credential register =>", err)
 		return nil, err
 	}
 	log.Println("Credential created ->", res)
