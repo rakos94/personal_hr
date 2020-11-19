@@ -10,6 +10,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo/middleware"
 
+	"personal_hr/helper"
 	pb "personal_hr/models"
 
 	"github.com/labstack/echo"
@@ -71,7 +72,7 @@ func CheckCredentialToken(token string) error {
 	if err != nil {
 		desc := strings.Split(err.Error(), "desc = ")
 		err = errors.New(desc[1])
-		log.Println("Error validate =>", err)
+		log.Println("Error validate =>", helper.RPCErrDesc(err))
 		return err
 	}
 

@@ -4,7 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"log"
-	"strings"
+
+	"google.golang.org/grpc/status"
 )
 
 func CatchError(e *error) {
@@ -21,6 +22,20 @@ func CatchErrorGeneral() {
 
 // RPCErrDesc get decription error of rpc
 func RPCErrDesc(err error) error {
-	desc := strings.Split(err.Error(), "desc = ")
-	return errors.New(desc[1])
+	desc := RPCErr(err).Message()
+
+	return errors.New(desc)
+}
+
+// RPCErrCode get code error of rpc
+func RPCErrCode(err error) error {
+	code := RPCErr(err).Code()
+
+	return errors.New(code.String())
+}
+
+// RPCErr get rpc error struct method
+func RPCErr(err error) *status.Status {
+	r, _ := status.FromError(err)
+	return r
 }
