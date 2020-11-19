@@ -10,6 +10,7 @@ import (
 
 // PersonRequest ...
 type PersonRequest struct {
+	UserID            string      `form:"user_id" validate:"required"`
 	FirstName         string      `form:"first_name" validate:"required"`
 	LastName          string      `form:"last_name"`
 	Email             string      `form:"email" validate:"required,email"`
@@ -28,6 +29,7 @@ func (p PersonRequest) Convert(c echo.Context) *PersonRequest {
 	BirthDate := GetValue(c, "birth_date")
 	IsFromRecruitment, _ := strconv.ParseBool(GetValue(c, "is_from_recruitment"))
 	return &PersonRequest{
+		UserID:            GetValue(c, "user_id"),
 		FirstName:         GetValue(c, "first_name"),
 		LastName:          GetValue(c, "last_name"),
 		Email:             GetValue(c, "email"),
@@ -45,6 +47,7 @@ func (p PersonRequest) Convert(c echo.Context) *PersonRequest {
 // Model from request
 func (p PersonRequest) Model() *models.Person {
 	return &models.Person{
+		UserID:            p.UserID,
 		FirstName:         p.FirstName,
 		LastName:          &p.LastName,
 		Email:             p.Email,

@@ -7,6 +7,7 @@ import (
 // Person ...
 type Person struct {
 	BaseModels
+	UserID            string      `gorm:"not null"`
 	FirstName         string      `gorm:"not null"`
 	LastName          *string     ``
 	Email             string      `gorm:"unique;not null"`

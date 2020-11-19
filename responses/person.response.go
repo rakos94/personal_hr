@@ -8,6 +8,7 @@ import (
 // PersonResponse ...
 type PersonResponse struct {
 	models.BaseModels
+	UserID            string      `json:"user_id"`
 	FirstName         string      `json:"first_name"`
 	LastName          *string     `json:"last_name"`
 	Email             string      `json:"email"`
@@ -23,6 +24,7 @@ type PersonResponse struct {
 func NewPersonResponse(m *models.Person) *PersonResponse {
 	return &PersonResponse{
 		BaseModels:        m.BaseModels,
+		UserID:            m.UserID,
 		FirstName:         m.FirstName,
 		LastName:          m.LastName,
 		Email:             m.Email,
