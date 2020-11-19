@@ -12,13 +12,13 @@ import (
 type PersonUpdateRequest struct {
 	FirstName         string      `form:"first_name"`
 	LastName          string      `form:"last_name"`
-	Email             string      `form:"email" validate:"email"`
 	BirthPlace        string      `form:"birth_place"`
 	BirthDate         helper.Date `form:"birth_date"`
 	Mobile            string      `form:"mobile"`
 	Gender            string      `form:"gender"`
 	IsFromRecruitment bool        `form:"is_from_recruitment"`
 	UpdatedBy         string      `form:"updated_by"`
+	// Email             string      `form:"email" validate:"email"`
 }
 
 // Convert from echo FormValue
