@@ -1,7 +1,6 @@
 package configs
 
 import (
-	"errors"
 	"log"
 	"net/http"
 	"strings"
@@ -15,6 +14,8 @@ import (
 
 	"github.com/labstack/echo"
 )
+
+var ReqToken string
 
 func SetJwt(e *echo.Echo) *echo.Group {
 	e.Use(middleware.Logger())
@@ -56,6 +57,7 @@ func middlewareCredential(next echo.HandlerFunc) echo.HandlerFunc {
 			return c.JSON(http.StatusUnauthorized, "No token")
 		}
 		reqToken = splitToken[1]
+		ReqToken = reqToken
 		err := CheckCredentialToken(reqToken)
 		if err != nil {
 			return c.JSON(http.StatusUnauthorized, err.Error())
@@ -70,8 +72,6 @@ func CheckCredentialToken(token string) error {
 		&pb.Token{Data: token})
 
 	if err != nil {
-		desc := strings.Split(err.Error(), "desc = ")
-		err = errors.New(desc[1])
 		log.Println("Error validate =>", helper.RPCErrDesc(err))
 		return err
 	}

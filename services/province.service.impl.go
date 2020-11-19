@@ -37,3 +37,9 @@ func (ProvinceServiceImpl)DeleteProvince(id string)error  {
 	}
 	return provinceDao.DeleteProvince(id)
 }
+func (ProvinceServiceImpl)GetProvinceByCouAndByName(id string, name string)([]models.Provinces,error)   {
+	return provinceDao.GetProvinceByCouAndByName(id,name)
+}
+func (ProvinceServiceImpl)GetProvinceByName(name string)([]models.Provinces,error)  {
+	return provinceDao.GetProvinceByName(name)
+}

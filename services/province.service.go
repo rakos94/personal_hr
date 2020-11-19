@@ -8,4 +8,6 @@ type ProvinceService interface {
 	GetProvinceById(id string)(models.Provinces,error)
 	UpdateProvince(id string,data*models.Provinces)error
 	DeleteProvince(id string)error
+	GetProvinceByCouAndByName(id string, name string)([]models.Provinces,error)
+	GetProvinceByName(name string)([]models.Provinces,error)
 }

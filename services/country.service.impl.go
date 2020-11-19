@@ -27,3 +27,6 @@ func (CountryServiceImpl)UpdateCountry(id string,data*models.Country)error  {
 func (CountryServiceImpl)DeleteCountry(id string)error  {
 	return countryDao.DeleteCountry(id)
 }
+func (CountryServiceImpl)GetCountryByName(name string)([]models.Country,error)  {
+	return countryDao.GetCountryByName(name)
+}

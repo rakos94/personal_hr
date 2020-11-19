@@ -29,6 +29,9 @@ func (CityDaoImpl)GetCityById(id string)(models.City,error)  {
 func (CityDaoImpl)UpdateCity(id string,data*models.City)error  {
 	var m = new(models.City)
 	first := g.Where("id",id).First(&m)
+	//subq:= g.Select("id").Where("name",id).Find(&models.Provinces{})
+	//q:= g.Where("province_id = (?)",subq).Find(&m)
+
 	if first.Error != nil {
 		return first.Error
 	}
@@ -46,4 +49,24 @@ func (CityDaoImpl)DeleteCity(id string)error  {
 		return first.Error
 	}
 	return nil
+}
+func (CityDaoImpl)GetCityByProvAndByName(id string, name string)([]models.City,error)  {
+	var(
+		m []models.City
+	)
+	data := g.Preload("Provinces.Country").Where("province_id = ? AND name Like ?", id,"%"+name+"%").Find(&m)
+	if data.Error != nil{
+		return m,data.Error
+	}
+	return m,nil
+}
+func (CityDaoImpl)GetCityByName(name string)([]models.City,error)  {
+	var(
+		m []models.City
+	)
+	data := g.Preload("Provinces.Country").Where("name Like ?", "%"+name+"%").Find(&m)
+	if data.Error != nil{
+		return m,data.Error
+	}
+	return m,nil
 }

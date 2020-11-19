@@ -1,6 +1,8 @@
 package dao
 
-import "personal_hr/models"
+import (
+	"personal_hr/models"
+)
 
 type ProvinceDaoImpl struct {}
 
@@ -47,4 +49,24 @@ func (ProvinceDaoImpl)DeleteProvince(id string)error  {
 		return first.Error
 	}
 	return nil
+}
+func (ProvinceDaoImpl)GetProvinceByCouAndByName(id string, name string)([]models.Provinces,error)  {
+	var(
+		m []models.Provinces
+	)
+	data := g.Preload("Country").Where("country_id = ? AND name Like ?", id,"%"+name+"%").Find(&m)
+	if data.Error != nil{
+		return m,data.Error
+	}
+	return m,nil
+}
+func (ProvinceDaoImpl)GetProvinceByName(name string)([]models.Provinces,error)  {
+	var(
+		m []models.Provinces
+	)
+	data := g.Preload("Country").Where("name Like ?","%"+name+"%").Find(&m)
+	if data.Error != nil{
+		return m,data.Error
+	}
+	return m,nil
 }
