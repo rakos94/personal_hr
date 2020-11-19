@@ -22,7 +22,6 @@ func (r EducationUpdateRequest) Convert(c echo.Context) *EducationUpdateRequest 
 	if err := c.Bind(&r); err != nil {
 		log.Println(err)
 	}
-	log.Println(r)
 	return &r
 }
 
