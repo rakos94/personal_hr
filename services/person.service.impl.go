@@ -23,7 +23,8 @@ func (PersonServiceImpl) Login(email string, pwd string) (models.Person, error) 
 	res, err := configs.Client.Login(configs.Ctx,
 		&pb.Users{Username: email, Password: pwd})
 	if err != nil {
-		log.Println("Error credential login =>", helper.RPCErrDesc(err))
+		err = helper.RPCErrDesc(err)
+		log.Println("Error credential login =>", err)
 		return models.Person{}, err
 	}
 	log.Println("Login success ->", res)
