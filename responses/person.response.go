@@ -15,7 +15,7 @@ type PersonResponse struct {
 	BirthDate         helper.Date `json:"birth_date"`
 	Mobile            *string     `json:"mobile"`
 	Gender            string      `json:"gender"`
-	IsFromRecruitment bool        `json:"is_from_recruitment"`
+	IsFromRecruitment *bool       `json:"is_from_recruitment"`
 	models.BaseCUModels
 }
 

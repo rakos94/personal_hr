@@ -15,7 +15,7 @@ type Person struct {
 	BirthDate         helper.Date `gorm:"not null;type:date"`
 	Mobile            *string     ``
 	Gender            string      `gorm:"not null"`
-	IsFromRecruitment bool        `gorm:"not null;default:false"`
+	IsFromRecruitment *bool       `gorm:"not null;default:false"`
 	CreatedBy         string      `gorm:"not null;default:admin"`
 	UpdatedBy         string      `gorm:"not null;default:admin"`
 	Token             string      `gorm:"-"`
