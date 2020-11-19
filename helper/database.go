@@ -39,11 +39,26 @@ func (t *Date) UnmarshalJSON(data []byte) error {
 	return err
 }
 
+// UnmarshalParam ...
+func (t *Date) UnmarshalParam(src string) error {
+	layout := "2006-01-02"
+
+	ts, err := time.Parse(layout, src)
+	*t = Date(ts)
+	return err
+}
+
 // MarshalJSON ...
 func (t Date) MarshalJSON() ([]byte, error) {
 	//do your serializing here
 	stamp := fmt.Sprintf("\"%s\"", time.Time(t).Format("2006-01-02"))
 	return []byte(stamp), nil
+}
+
+// String ...
+func (t *Date) String() string {
+	tm := time.Time(*t)
+	return tm.Format("2006-01-02")
 }
 
 func validateDataTime(layout string, data []byte) (time.Time, error) {
