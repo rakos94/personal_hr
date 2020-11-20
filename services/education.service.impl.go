@@ -33,6 +33,10 @@ func (EducationServiceImpl) GetEducationByID(id string) (models.Education, error
 
 // GetEducationByPersonID ...
 func (EducationServiceImpl) GetEducationByPersonID(id string) ([]models.Education, error) {
+	_, err := personService.GetPersonByID(id)
+	if err != nil {
+		return nil, errors.New("Person id not exist")
+	}
 	return educationDao.GetEducationByPersonID(id)
 }
 

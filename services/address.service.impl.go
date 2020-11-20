@@ -36,6 +36,10 @@ func (AddressServiceImpl) GetAddressByID(id string) (models.Address, error) {
 
 // GetAddressByPersonID ...
 func (AddressServiceImpl) GetAddressByPersonID(id string) ([]models.Address, error) {
+	_, err := personService.GetPersonByID(id)
+	if err != nil {
+		return nil, errors.New("Person id not exist")
+	}
 	return addressDao.GetAddressByPersonID(id)
 }
 
