@@ -31,6 +31,11 @@ func (EducationServiceImpl) GetEducationByID(id string) (models.Education, error
 	return educationDao.GetEducationByID(id)
 }
 
+// GetEducationByPersonID ...
+func (EducationServiceImpl) GetEducationByPersonID(id string) ([]models.Education, error) {
+	return educationDao.GetEducationByPersonID(id)
+}
+
 // UpdateEducation ...
 func (EducationServiceImpl) UpdateEducation(id string, data *models.Education) (*models.Education, error) {
 	return educationDao.UpdateEducation(id, data)

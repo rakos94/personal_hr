@@ -16,6 +16,7 @@ func SetEducation(c *echo.Group) {
 	c.GET("/education", getEducationAll)
 	c.GET("/education/:id", getEducationByID)
 	c.PUT("/education/:id", updateEducation)
+	c.GET("/person/:id/education", getEducationByPersonID)
 }
 
 func createEducation(c echo.Context) error {
@@ -72,5 +73,17 @@ func updateEducation(c echo.Context) error {
 	}
 
 	rs := responses.NewEducationResponse(result)
+	return res(c, rs)
+}
+
+func getEducationByPersonID(c echo.Context) error {
+	id := c.Param("id")
+
+	result, err := educationService.GetEducationByPersonID(id)
+	if err != nil {
+		return resErr(c, err)
+	}
+
+	rs := responses.NewListEducationResponse(result)
 	return res(c, rs)
 }
