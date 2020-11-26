@@ -125,5 +125,6 @@ func getUser(c echo.Context) error {
 	if err != nil {
 		return resErr(c, err)
 	}
-	return res(c, person)
+	rs := responses.NewPersonResponse(&person)
+	return res(c, rs)
 }
