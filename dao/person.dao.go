@@ -8,6 +8,7 @@ type PersonDao interface {
 	GetPersonAll() ([]models.Person, error)
 	GetPersonByID(id string) (models.Person, error)
 	GetPersonByEmail(email string) (models.Person, error)
+	GetPersonByToken(token string) (models.Person, error)
 	UpdatePerson(id string, data *models.Person) (*models.Person, error)
 	UpdatePassword(id string, password string) error
 }

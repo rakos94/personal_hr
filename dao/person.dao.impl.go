@@ -49,6 +49,17 @@ func (PersonDaoImpl) GetPersonByEmail(email string) (models.Person, error) {
 	return data, nil
 }
 
+// GetPersonByToken ...
+func (PersonDaoImpl) GetPersonByToken(token string) (models.Person, error) {
+	var data models.Person
+	result := g.Where("token", token).First(&data)
+	if result.Error != nil {
+		return data, result.Error
+	}
+
+	return data, nil
+}
+
 // UpdatePerson ...
 func (PersonDaoImpl) UpdatePerson(id string, data *models.Person) (*models.Person, error) {
 	m := &models.Person{}

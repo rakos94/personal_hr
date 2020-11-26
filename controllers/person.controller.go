@@ -1,13 +1,12 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
+	"personal_hr/configs"
 	"personal_hr/requests"
 	"personal_hr/responses"
 	"personal_hr/services"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
 )
 
@@ -122,8 +121,9 @@ func updatePassword(c echo.Context) error {
 }
 
 func getUser(c echo.Context) error {
-	user := c.Get("user").(*jwt.Token)
-	claims := user.Claims.(jwt.MapClaims)
-	fmt.Println(claims)
-	return res(c, claims)
+	person, err := personService.GetPersonByToken(configs.ReqToken)
+	if err != nil {
+		return resErr(c, err)
+	}
+	return res(c, person)
 }

@@ -18,7 +18,7 @@ type Person struct {
 	IsFromRecruitment *bool       `gorm:"not null;default:false"`
 	CreatedBy         string      `gorm:"not null;default:admin"`
 	UpdatedBy         string      `gorm:"not null;default:admin"`
-	Token             string      `gorm:"-"`
+	Token             string      `gorm:""`
 	Addresses         []Address   `gorm:"foreignKey:PersonID"`
 	Educations        []Education `gorm:"foreignKey:PersonID"`
 	BaseCUModels

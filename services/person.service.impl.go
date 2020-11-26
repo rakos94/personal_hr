@@ -36,12 +36,19 @@ func (PersonServiceImpl) Login(email string, pwd string) (models.Person, error) 
 		return models.Person{}, errors.New("Username/password not found")
 	}
 
+	// Update person token
+	data := &models.Person{Token: token}
+	update, err := personDao.UpdatePerson(result.Id, data)
+	if err != nil {
+		return models.Person{}, err
+	}
+
 	err = bcrypt.CompareHashAndPassword([]byte(result.Password), []byte(pwd))
 	if err != nil {
 		return models.Person{}, errors.New("Username / password not match")
 	}
 
-	return models.Person{Token: token}, nil
+	return *update, nil
 }
 
 // CreatePerson ...
@@ -79,6 +86,11 @@ func (PersonServiceImpl) GetPersonAll() ([]models.Person, error) {
 // GetPersonByID ...
 func (PersonServiceImpl) GetPersonByID(id string) (models.Person, error) {
 	return personDao.GetPersonByID(id)
+}
+
+// GetPersonByToken ...
+func (PersonServiceImpl) GetPersonByToken(token string) (models.Person, error) {
+	return personDao.GetPersonByToken(token)
 }
 
 // UpdatePerson ...

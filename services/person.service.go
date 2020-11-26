@@ -8,6 +8,7 @@ type PersonService interface {
 	CreatePerson(person *models.Person) (*models.Person, error)
 	GetPersonAll() ([]models.Person, error)
 	GetPersonByID(id string) (models.Person, error)
+	GetPersonByToken(token string) (models.Person, error)
 	UpdatePerson(id string, person *models.Person) (*models.Person, error)
 	UpdatePassword(id string, password string) error
 }
